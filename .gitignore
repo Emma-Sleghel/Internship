@@ -1,0 +1,12 @@
+.vs/
+/.idea
+/.vscode
+/src/*/bin
+/src/*/obj
+/tests/*/bin
+/tests/*/obj
+*.DotSettings.user
+*.xproj.user
+*.csproj.user
+project.lock.json
+logs/
