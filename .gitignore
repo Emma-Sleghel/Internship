@@ -10,3 +10,6 @@
 *.csproj.user
 project.lock.json
 logs/
+bin/
+Migrations/
+obj/
