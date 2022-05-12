@@ -21,6 +21,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IGenericRepository<Leave>, GenericRepository<Leave>>();
 builder.Services.AddScoped<ILeaveService, LeaveService>();
 
+builder.Services.AddScoped<IGenericRepository<Stability>, GenericRepository<Stability>>();
+builder.Services.AddScoped<IStabilityService, StabilityService>();
+
+
+
 builder.Services.AddScoped<IGenericRepository<Employee>, GenericRepository<Employee>>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 #region Authorization
