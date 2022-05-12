@@ -1,0 +1,72 @@
+﻿using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UserOperation.Data.Entities;
+using UserOperation.Data.Repository;
+using UserOperation.Services.Dtos;
+
+namespace UserOperation.Services.Services
+{
+    public class EmployeeService : IEmployeeService
+    {
+        private readonly IMapper _mapper;
+        private IGenericRepository<Employee> _employeeRepository;
+        private IGenericRepository<Project> _projectRepository;
+        private IGenericRepository<Level> _levelRepository;
+        private IGenericRepository<Position> _positionRepository;
+        public EmployeeService(IMapper mapper, IGenericRepository<Employee> employeeRepository,
+            IGenericRepository<Project> projectRepository, IGenericRepository<Level> levelRepository, IGenericRepository<Position> positionRepository)
+        {
+            _mapper = mapper;
+            _employeeRepository = employeeRepository;
+            _projectRepository = projectRepository;   
+            _levelRepository = levelRepository;
+            _positionRepository = positionRepository;
+        }
+        public ICollection<EmployeeDto> GetAllEmployees()
+        {
+            var employees = _mapper.Map<List<EmployeeDto>>(_employeeRepository.GetAll());
+            return employees;
+        }
+        public EmployeeDto GetEmployeeById(int id)
+        {
+            var employee = _mapper.Map<EmployeeDto>(_employeeRepository.GetById(id));
+            return employee;
+        }
+        public void CreateEmployee(EmployeeDto employee)
+        {
+            var level = _levelRepository.GetById(employee.LevelId);
+            var position = _positionRepository.GetById(employee.PositionId);
+            var projects = _projectRepository.Query(x => employee.ProjectIds.Contains(x.ProjectId)).ToList();
+            var employeeMap = _mapper.Map<Employee>(employee);
+            employeeMap.Level = level;
+            employeeMap.Position = position;
+            employeeMap.Projects = projects;
+            _employeeRepository.Create(employeeMap);       
+        }
+
+        public void DeleteEmployee(int id)
+        {
+            Employee employee = _employeeRepository.GetById(id);
+            _employeeRepository.Delete(employee);
+        }
+
+        public void UpdateEmployee(EmployeeDto employee)
+        {
+            var dbEmployee = _employeeRepository.GetById(employee.EmployeeId);
+            var level = _levelRepository.GetById(employee.LevelId);
+            var position = _positionRepository.GetById(employee.PositionId);
+            var projects = _projectRepository.Query(x => employee.ProjectIds.Contains(x.ProjectId)).ToList();
+
+            dbEmployee.Level = level;
+            dbEmployee.Position = position;
+            dbEmployee.Projects = projects;
+            dbEmployee.EmployeeName = employee.EmployeeName;
+            _employeeRepository.Update(dbEmployee);
+            
+        }
+    }
+}
