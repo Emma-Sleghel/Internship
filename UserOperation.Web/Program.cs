@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UserOperation.Data;
 using UserOperation.Data.Entities;
+using UserOperation.Data.Repository;
+using UserOperation.Services.Services;
 using UserOperation.Web.Core;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<IGenericRepository<Leave>, GenericRepository<Leave>>();
+builder.Services.AddScoped<ILeaveService, LeaveService>();
+
+builder.Services.AddScoped<IGenericRepository<Employee>, GenericRepository<Employee>>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 #region Authorization
 AddAuthorizationPolicies();
 #endregion
