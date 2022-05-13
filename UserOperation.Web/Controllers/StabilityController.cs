@@ -112,12 +112,6 @@ namespace UserOperation.Web.Controllers
                 ModelState.AddModelError("","Something went wrong deleting employee");
 
             return RedirectToAction("Index");
-          
-
-
         }
-
-
-
     }
 }
