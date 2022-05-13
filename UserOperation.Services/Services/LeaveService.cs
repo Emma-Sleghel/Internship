@@ -37,8 +37,13 @@ namespace UserOperation.Services.Services
             var leaves = _mapper.Map<List<LeaveDto>>(_leaveRepository.GetAll());
             return leaves;
         }
-        public void CreateLeave(LeaveDto leave)
+        public int? CreateLeave(LeaveDto leave)
         {
+            var leaveEntity = _leaveRepository.Query(l=>l.Employee.EmployeeID == leave.EmployeeId)
+                .FirstOrDefault();
+            if (leaveEntity != null)
+                return null;
+            
             var employee = _employeeRepository.GetById(leave.EmployeeId);     
             var primaryReason = _reasonRepository.GetById(leave.PrimaryReasonId);
             var secondaryReason = _reasonRepository.GetById(leave.SecondaryReasonId);
@@ -49,10 +54,16 @@ namespace UserOperation.Services.Services
             leaveMap.SecondaryReason = secondaryReason;
            
             _leaveRepository.Create(leaveMap);
+            return leaveMap.LeaveID;
         }
 
-        public void UpdateLeave(LeaveDto leave)
+        public LeaveDto UpdateLeave(LeaveDto leave)
         {
+            var leaveEntity = _leaveRepository.Query(l => l.Employee.EmployeeID == leave.EmployeeId)
+                .FirstOrDefault();
+            if (leaveEntity == null)
+                return null;
+
             var dbLeave = _leaveRepository.GetById(leave.LeaveID);
             var employee = _employeeRepository.GetById(leave.EmployeeId);
             var primaryReason = _reasonRepository.GetById(leave.PrimaryReasonId);
@@ -66,6 +77,8 @@ namespace UserOperation.Services.Services
             dbLeave.SecondaryReason = secondaryReason;
 
             _leaveRepository.Update(dbLeave);
+
+            return _mapper.Map<LeaveDto>(dbLeave);
         }
 
 
