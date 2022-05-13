@@ -11,7 +11,7 @@ namespace UserOperation.Services.Services
     {
         StabilityDto GetStabilityById(int id);
         ICollection<StabilityDto> GetAllStabilities();
-        void CreateStability(StabilityDto stability);
+        int? CreateStability(StabilityDto stability);
         void UpdateStability(StabilityDto stability);
         bool DeleteStability(int id);
     }
