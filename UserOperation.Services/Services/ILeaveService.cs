@@ -11,8 +11,8 @@ namespace UserOperation.Services.Services
     {
         LeaveDto GetLeaveById(int id);
         ICollection<LeaveDto> GetAllLeaves();
-        void CreateLeave(LeaveDto leave);
-        void UpdateLeave(LeaveDto leave);
+        int? CreateLeave(LeaveDto leave);
+        LeaveDto UpdateLeave(LeaveDto leave);
         bool DeleteLeave(int id);
     }
 }
