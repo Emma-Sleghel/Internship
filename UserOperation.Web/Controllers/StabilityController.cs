@@ -31,13 +31,7 @@ namespace UserOperation.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(StabilityViewModel model)
         {
-            var stability = _mapper.Map<List<StabilityViewModel>>(_stabilityService.GetAllStabilities())
-                 .Where(l => l.Employee.EmployeeName.Trim().ToUpper() == model.Employee.EmployeeName.TrimEnd().ToUpper())
-             .FirstOrDefault();
-            if (stability != null)
-            {
-                ModelState.AddModelError("Name", "Exist already an employee with this Name");
-            }
+            
             //getbyid
             var obj = _mapper.Map<StabilityDto>(model);
             if (ModelState.IsValid)
@@ -61,7 +55,7 @@ namespace UserOperation.Web.Controllers
             }
             return View(stabilityFromDb);
         }
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(StabilityViewModel model)
         { 
@@ -94,30 +88,14 @@ namespace UserOperation.Web.Controllers
             }
             return View(stabilityFromDb);
         }
-        [HttpPost]
+        [HttpDelete]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteStability(int id)
         {
-            //Stability stability = _stabilityService.GetStabilityById(id);
-            //if (stability == null)
-            //{
-            //    return NotFound();
-            //}
-            //_stabilityService.DeleteStability(id);
-            //TempData["success"] = "Employee deleted successfully";
-            //return RedirectToAction("Index");
-            if(!ModelState.IsValid)
-                return BadRequest(ModelState);
             if (!_stabilityService.DeleteStability(id))
                 ModelState.AddModelError("","Something went wrong deleting employee");
 
             return RedirectToAction("Index");
-          
-
-
         }
-
-
-
     }
 }

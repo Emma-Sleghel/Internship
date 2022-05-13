@@ -41,8 +41,16 @@ namespace UserOperation.Services.Services
             var stabilities = _mapper.Map<List<StabilityDto>>(_stabilityRepository.GetAll());
             return stabilities;
         }
-        public void CreateStability(StabilityDto stability)
+        public int? CreateStability(StabilityDto stability)
         {
+            var stabilityEntity = _stabilityRepository.Query(l => l.Employee.EmployeeID == stability.EmployeeId)
+                
+             .FirstOrDefault();
+            if (stabilityEntity != null)
+            {
+                return null;
+            }
+
             var employee = _employeeRepository.GetById(stability.EmployeeId);
             var criticality = _criticalityRepository.GetById(stability.CriticalityID);
             var stabilityLevel = _stabilityLevelRepository.GetById(stability.StabilityLevelID);
@@ -53,6 +61,7 @@ namespace UserOperation.Services.Services
             stabilityMap.StabilityLevel = stabilityLevel;
 
             _stabilityRepository.Create(stabilityMap);
+            return stabilityMap.StabilityId;
         }
 
         public void UpdateStability(StabilityDto stability)
