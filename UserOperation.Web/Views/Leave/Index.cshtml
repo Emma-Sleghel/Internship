@@ -1,0 +1,84 @@
+﻿@using UserOperation.Services.Dtos
+@model ICollection<LeaveDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<partial name="_FilesActionsSection"/>
+ <div class="form-btns">
+        <a class="btn  btn-active" asp-controller="leave" asp-action="Index">Leaves</a>
+        <a class="btn  btn-off" asp-controller="stability" asp-action="Index">Stability</a>
+ </div>
+<table class="table generic-table table-sm" id="table">
+    <a class="btn btn-email btn-sm" asp-controller="leave" asp-action="Create"> 
+        <i class="bi bi-person-plus"></i>
+        Add employee</a>
+    <thead>
+        <tr>
+            <th>Personnel NO.</th>
+            <th>Employee name</th>
+            <th>Projects</th>
+            <th>Position name</th>
+            <th>Employee level</th>
+            <th>Leaving month</th>
+            <th>Leaving year</th>
+            <th>Active HC by month</th>
+            <th>Primary leaving reason</th>
+            <th>Secondary leaving reason</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var obj in Model)
+        {
+            <tr>
+                <td>
+                    @obj.Employee.EmployeeId
+                </td>
+                <td>
+                    @obj.Employee.EmployeeName
+                </td> 
+                <td>
+                    @string.Join(",",obj.Employee.Projects.Select(x=>x.ProjectName).ToList())
+                </td>
+                <td>
+                    @obj.Employee.Position.PositionName
+                </td> 
+                <td>
+                    @obj.Employee.Level.LevelName
+                </td> 
+                <td>
+                    @obj.LeaveMonth
+                </td> 
+                <td>
+                    @obj.LeaveYear
+                </td> 
+                <td>
+                    @obj.ActiveHC
+                </td>
+                <td>
+                    @obj.PrimaryReason.ReasonName
+                </td>
+                <td>
+                    @obj.SecondaryReason.ReasonName
+                </td>
+                <td>
+                    <a asp-controller="Leave" asp-action="Edit" asp-route-id="@obj.Employee.EmployeeId">
+                        <i class="bi bi-pencil-square "  style="font-size: 18px"></i>
+                    </a>
+                </td>
+                <td>
+                    <a asp-controller="Leave" asp-action="Delete" asp-route-id="@obj.Employee.EmployeeId">
+                        <i class="bi bi-trash "  style="font-size: 18px"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+

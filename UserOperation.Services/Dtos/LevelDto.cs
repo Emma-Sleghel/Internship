@@ -8,6 +8,7 @@ namespace UserOperation.Services.Dtos
 {
     public class LevelDto
     {
+        public int LevelId { get; set; }
         public string LevelName { get; set; }
     }
 }

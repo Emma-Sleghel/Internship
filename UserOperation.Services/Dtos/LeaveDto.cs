@@ -10,6 +10,9 @@ namespace UserOperation.Services.Dtos
     {
         public int LeaveID { get; set; }
         public int EmployeeId { get; set; }
+        public EmployeeDto Employee { get; set; }
+        public ReasonDto PrimaryReason { get; set; }
+        public ReasonDto SecondaryReason { get; set; }
         public int LeaveMonth { get; set; }
         public int LeaveYear { get; set; }
         public int ActiveHC { get; set; }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,13 @@ namespace UserOperation.Services.Services
 
         public ICollection<StabilityDto> GetAllStabilities()
         {
-            var stabilities = _mapper.Map<List<StabilityDto>>(_stabilityRepository.GetAll());
+            var stabilities = _mapper.Map<List<StabilityDto>>(_stabilityRepository.Query()
+                .Include(x => x.Employee).ThenInclude(x => x.Level)
+                .Include(x => x.Employee).ThenInclude(x => x.Position)
+                .Include(x => x.Employee).ThenInclude(x => x.Projects)
+                .Include(x => x.StabilityLevel)
+                .Include(x => x.Criticality)
+                );
             return stabilities;
         }
         public int? CreateStability(StabilityDto stability)

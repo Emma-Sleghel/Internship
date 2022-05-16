@@ -8,5 +8,7 @@ namespace UserOperation.Services.Dtos
 {
     public class StabilityLevelDto
     {
+        public int StabilityLevelID { get; set; }
+        public string StabilityLevelName { get; set; }
     }
 }
