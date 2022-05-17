@@ -32,11 +32,25 @@ body {
 .padding{
     padding:0 20px;
 }
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+.text-center{
+    text-align:center;
+}
+.flex-spaceBetween {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
 table.dataTable.table-sm thead .sorting::before,
-table.dataTable.table-sm thead .sorting_asc::before{
-    top:28% ;
-    right:-0.15em ;
-    
+table.dataTable.table-sm thead .sorting_asc::before {
+    top: 28%;
+    right: -0.15em;
 }
 table.dataTable.table-sm thead .sorting::after,
 table.dataTable.table-sm thead .sorting_asc::after {
@@ -128,3 +142,6 @@ table.dataTable.table-sm thead .sorting_asc::after {
     text-decoration:none;
 }
 
+table tbody tr td .bi {
+    font-size: 18px;
+}
