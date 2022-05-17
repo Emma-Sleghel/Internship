@@ -10,8 +10,9 @@ namespace UserOperation.Services.Dtos
     {
         public int EmployeeId { get; set; }
         public string EmployeeName { get; set; }
-        public int PositionId { get; set; }
-        public int LevelId { get; set; }
+        public PositionDto Position { get; set; }
+        public LevelDto Level { get; set; }
         public List<int> ProjectIds { get; set; }
+        public List<ProjectDto> Projects { get; set; }
     }
 }

@@ -12,10 +12,12 @@ namespace UserOperation.Web.Controllers
         private readonly IMapper _mapper;
 
         private readonly IStabilityService _stabilityService;
-        public StabilityController(IStabilityService stabilityService, IMapper mapper)
+        private readonly ILogger<StabilityController> _logger;
+        public StabilityController(IStabilityService stabilityService, IMapper mapper, ILogger<StabilityController> logger)
         {
             _stabilityService = stabilityService;
             _mapper = mapper;
+            _logger = logger;
         }
         
         public IActionResult Index()

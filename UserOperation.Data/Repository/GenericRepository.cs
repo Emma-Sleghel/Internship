@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace UserOperation.Data.Repository
 {
@@ -20,7 +22,7 @@ namespace UserOperation.Data.Repository
 
         public ICollection<T> GetAll()
         {
-            return entities.ToList();
+            return entities.ToList();   
         }
 
         public void Create(T entity)
@@ -50,5 +52,11 @@ namespace UserOperation.Data.Repository
         {
             return entities.Where(expression);
         }
+        public IQueryable<T> Query()
+        {
+            return entities.AsQueryable();
+        }
+
+       
     }
 }

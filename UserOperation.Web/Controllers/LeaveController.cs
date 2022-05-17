@@ -11,16 +11,18 @@ namespace UserOperation.Web.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ILeaveService _leaveService;
-        public LeaveController(ILeaveService leaveService,IMapper mapper)
+        private readonly ILogger<LeaveController> _logger;
+        public LeaveController(ILeaveService leaveService,IMapper mapper, ILogger<LeaveController> logger)
         {
             _leaveService = leaveService;
             _mapper = mapper;
+            _logger = logger;
+
         }
         public IActionResult Index()
         {
             var objLeaveList = _leaveService.GetAllLeaves();
             return View(objLeaveList);
-
         }
 
         public IActionResult Create()

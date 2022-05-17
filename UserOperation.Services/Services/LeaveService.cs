@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using UserOperation.Data.Entities;
 using UserOperation.Services.Dtos;
 using UserOperation.Data.Repository;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace UserOperation.Services.Services
 {
@@ -34,7 +36,13 @@ namespace UserOperation.Services.Services
 
         public ICollection<LeaveDto> GetAllLeaves()
         {
-            var leaves = _mapper.Map<List<LeaveDto>>(_leaveRepository.GetAll());
+            var leaves = _mapper.Map<List<LeaveDto>>(_leaveRepository.Query().Include(x=>x.Employee).ThenInclude(x=>x.Projects)
+                .Include(x => x.Employee).ThenInclude(x=>x.Level)
+                .Include(x=>x.Employee).ThenInclude(x=>x.Position)
+                .Include(x=>x.PrimaryReason)
+                .Include(x=>x.SecondaryReason)
+                );
+               
             return leaves;
         }
         public int? CreateLeave(LeaveDto leave)

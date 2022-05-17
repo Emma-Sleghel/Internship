@@ -1,0 +1,78 @@
+﻿@using UserOperation.Services.Dtos
+@using UserOperation.Data.Entities
+@model ICollection<StabilityDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<partial name="_FilesActionsSection"/>
+ <div class="form-btns">
+        <a class="btn  btn-off" asp-controller="leave" asp-action="Index">Leaves</a>
+        <a class="btn  btn-active" asp-controller="stability" asp-action="Index">Stability</a>
+    </div>
+<table class="table generic-table table-sm" id="tabletwo">
+    <a class="btn btn-email btn-sm" asp-controller="stability" asp-action="Create"> 
+        <i class="bi bi-person-plus"></i>
+        Add employee</a>
+    <thead>
+        <tr>
+            <th>Personnel NO.</th>
+            <th>Employee name</th>
+            <th>Projects</th>
+            <th>Position name</th>
+            <th>Employee level</th>
+            <th>Stability</th>
+            <th>Leaving year</th>
+            <th>Level of stability</th>
+            <th>Critically</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var obj in Model)
+        {
+            <tr>
+                <td>
+                    @obj.Employee.EmployeeId
+                </td>
+                <td>
+                    @obj.Employee.EmployeeName
+                </td> 
+                <td>
+                    @string.Join(",",obj.Employee.Projects.Select(x=>x.ProjectName).ToList())
+                </td>
+                <td>
+                    @obj.Employee.Position.PositionName
+                </td> 
+                <td>
+                    @obj.Employee.Level.LevelName
+                </td> 
+                <td>
+                    @obj.StabilityMonth
+                </td> 
+                <td>
+                    @obj.LeavingYear
+                </td> 
+                <td>
+                    @obj.StabilityLevel.StabilityLevelName
+                </td>
+                <td>
+                    @obj.Criticality.CriticalityName
+                </td>
+                <td>
+                    <a asp-controller="Stability" asp-action="Edit" asp-route-id="@obj.Employee.EmployeeId">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                  </td> 
+                 <td>
+                    <a asp-controller="Stability" asp-action="Delete" asp-route-id="@obj.Employee.EmployeeId">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

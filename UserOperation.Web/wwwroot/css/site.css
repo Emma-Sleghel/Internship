@@ -1,18 +1,147 @@
 html {
   font-size: 14px;
 }
-
+*,*::after,*::before{
+    box-sizing:border-box;
+}
 @media (min-width: 768px) {
   html {
     font-size: 16px;
   }
 }
+.navbar{
+    background-color:#4f5c6e;
+    
+}
+.navbar .container-fluid a,
+.navbar .container-fluid a .nav-link,
+.navbar .container-fluid button .nav-link
+{
+    color:#fff;
+}
 
 html {
-  position: relative;
-  min-height: 100%;
-}
+        position: relative;
+        min-height: 100%;
+    }
 
 body {
   margin-bottom: 60px;
+  
+}
+.padding{
+    padding:0 20px;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+.text-center{
+    text-align:center;
+}
+.flex-spaceBetween {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+table.dataTable.table-sm thead .sorting::before,
+table.dataTable.table-sm thead .sorting_asc::before {
+    top: 28%;
+    right: -0.15em;
+}
+table.dataTable.table-sm thead .sorting::after,
+table.dataTable.table-sm thead .sorting_asc::after {
+    top:30px ;
+    right:-0.15em ;
+    
+}
+
+.files-btns {
+        margin: 40px 0px;
+    }
+.files-btns .upload-btns span{
+    font-size:12px;
+}
+
+.files-btns .files-manager-btns{
+    background-color:#667080;
+    border:0;
+}
+.btn-sm{
+    height:30px;
+}
+.btn-email{
+    background-color:#EEF1F4;
+}
+.form-btns {
+     display: flex;
+    }
+.btn-active {
+    color: #667080;
+    border: none;
+    border-bottom: 2px solid #667080;
+    border-radius: 0px 5px 0px 0px;
+    background-color: #F9FAFC;
+    font-size: 12px;
+    padding: 5px 20px;
+    font-weight:bold;
+}
+.btn-off {
+    color: #9AA1A9;
+    border: none;
+    border-bottom: 1px solid #CED1D7;
+    border-radius: 5px 0px 0px 0px;
+    background-color: #F9FAFC;
+    font-size: 12px;
+    padding: 5px 25px;
+}
+
+
+.generic-table {
+    background-color: #F9FAFC;
+    border-radius: 0px 10px 10px 10px;
+    width:100%;
+}
+.generic-table > :not(caption) > * > * {
+        border-bottom-width: 0px;
+    }
+.generic-table thead {
+        color: #838F9E;
+        vertical-align: middle;
+        font-weight: 200 ;
+        font-size: 13px;
+        border-bottom: 1px solid #E5E5E5;
+        height:60px;
+}
+
+.generic-table tbody {
+        color: #505D5F;
+        font-size: 15px;
+ }
+.generic-table th,
+.generic-table td{
+    padding:10px;
+}
+.generic-table tr th{
+    font-weight:400;
+}
+.generic-table tr td{
+    font-weight:400;
+}
+.generic-table tr th:nth-child(4){
+    width:15%;
+}
+.generic-table tr td:nth-child(2){
+    font-weight:bold;
+}
+.bi{
+    color:#667080;
+    text-decoration:none;
+}
+
+table tbody tr td .bi {
+    font-size: 18px;
 }

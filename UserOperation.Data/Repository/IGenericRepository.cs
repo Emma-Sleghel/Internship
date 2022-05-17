@@ -1,4 +1,4 @@
-﻿
+﻿using System.Linq.Expressions;
 
 namespace UserOperation.Data.Repository
 {
@@ -11,5 +11,6 @@ namespace UserOperation.Data.Repository
         void Delete(T entity);
         void Save();
         IEnumerable<T> Query(Func<T, bool> expression);
+        IQueryable<T> Query();
     }
 }

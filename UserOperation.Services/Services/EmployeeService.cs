@@ -38,8 +38,8 @@ namespace UserOperation.Services.Services
         }
         public void CreateEmployee(EmployeeDto employee)
         {
-            var level = _levelRepository.GetById(employee.LevelId);
-            var position = _positionRepository.GetById(employee.PositionId);
+            var level = _levelRepository.GetById(employee.Level.LevelId);
+            var position = _positionRepository.GetById(employee.Position.PositionId);
             var projects = _projectRepository.Query(x => employee.ProjectIds.Contains(x.ProjectId)).ToList();
             var employeeMap = _mapper.Map<Employee>(employee);
             employeeMap.Level = level;
@@ -57,8 +57,8 @@ namespace UserOperation.Services.Services
         public void UpdateEmployee(EmployeeDto employee)
         {
             var dbEmployee = _employeeRepository.GetById(employee.EmployeeId);
-            var level = _levelRepository.GetById(employee.LevelId);
-            var position = _positionRepository.GetById(employee.PositionId);
+            var level = _levelRepository.GetById(employee.Level.LevelId);
+            var position = _positionRepository.GetById(employee.Position.PositionId);
             var projects = _projectRepository.Query(x => employee.ProjectIds.Contains(x.ProjectId)).ToList();
 
             dbEmployee.Level = level;
