@@ -40,7 +40,7 @@ namespace UserOperation.Services.Services
         {
             var level = _levelRepository.GetById(employee.Level.LevelId);
             var position = _positionRepository.GetById(employee.Position.PositionId);
-            var projects = _projectRepository.Query(x => employee.ProjectIds.Contains(x.ProjectId)).ToList();
+            var projects = _projectRepository.Query(x => employee.ProjectsIds.Contains(x.ProjectId)).ToList();
             
 
             var employeeMap = _mapper.Map<Employee>(employee);
@@ -61,7 +61,7 @@ namespace UserOperation.Services.Services
             var dbEmployee = _employeeRepository.GetById(employee.EmployeeId);
             var level = _levelRepository.GetById(employee.Level.LevelId);
             var position = _positionRepository.GetById(employee.Position.PositionId);
-            var projects = _projectRepository.Query(x => employee.ProjectIds.Contains(x.ProjectId)).ToList();
+            var projects = _projectRepository.Query(x => employee.ProjectsIds.Contains(x.ProjectId)).ToList();
             
             dbEmployee.Level = level;
             dbEmployee.Position = position;

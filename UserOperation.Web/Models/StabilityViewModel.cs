@@ -6,7 +6,7 @@
         public string StabilityMonth { get; set; }
         public int LeavingYear { get; set; }
         public EmployeeViewModel Employee { get; set; }
-        public StabilityLevelViewModel StabilityLevel { get; set; }
-        public CriticalityViewModel Criticality { get; set; }
+        public StabilityLevelViewModel? StabilityLevel { get; set; }
+        public CriticalityViewModel? Criticality { get; set; }
     }
 }

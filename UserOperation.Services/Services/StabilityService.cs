@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserOperation.Data.Entities;
 using UserOperation.Data.Repository;
 using UserOperation.Services.Dtos;
@@ -19,16 +14,20 @@ namespace UserOperation.Services.Services
         private IGenericRepository<Employee> _employeeRepository;
         private IGenericRepository<Criticality> _criticalityRepository;
         private IGenericRepository<StabilityLevel> _stabilityLevelRepository;
+        private IGenericRepository<Project> _projectRepository;
+        private readonly IEmployeeService _employeeService;
 
-
-
-        public StabilityService(IMapper mapper, IGenericRepository<Stability> stabilityRepository, IGenericRepository<Employee> employeeRepository, IGenericRepository<Criticality> criticalityRepository, IGenericRepository<StabilityLevel> stabilityLevelRepository)
+        public StabilityService(IMapper mapper, IGenericRepository<Stability> stabilityRepository,
+            IGenericRepository<Employee> employeeRepository, IGenericRepository<Criticality> criticalityRepository,
+            IGenericRepository<StabilityLevel> stabilityLevelRepository, IGenericRepository<Project> projectRepository, IEmployeeService employeeService)
         {
             _mapper = mapper;
             _stabilityRepository = stabilityRepository;
             _employeeRepository = employeeRepository;
             _criticalityRepository = criticalityRepository;
             _stabilityLevelRepository = stabilityLevelRepository;
+            _projectRepository = projectRepository;
+            _employeeService = employeeService;
         }
 
         public ICollection<ProjectDto> GetAllProjects()
@@ -65,11 +64,17 @@ namespace UserOperation.Services.Services
                 return null;
             }
 
-            var employee = _employeeRepository.GetById(stability.EmployeeId);
-            var criticality = _criticalityRepository.GetById(stability.CriticalityID);
-            var stabilityLevel = _stabilityLevelRepository.GetById(stability.StabilityLevelID);
-            var stabilityMap = _mapper.Map<Stability>(stability);
+            var employee = _employeeRepository.GetById(stability.Employee.EmployeeId);
+            if(employee == null)
+            {
+                _employeeService.CreateEmployee(stability.Employee);
+                employee = _employeeRepository.GetById(stability.Employee.EmployeeId);
+            }
 
+            var criticality = _criticalityRepository.GetById(stability.Criticality.CriticalityID) ;
+            var stabilityLevel = _stabilityLevelRepository.GetById(stability.StabilityLevel.StabilityLevelID);
+            var stabilityMap = _mapper.Map<Stability>(stability);
+            
             stabilityMap.Employee = employee;
             stabilityMap.Criticality = criticality;
             stabilityMap.StabilityLevel = stabilityLevel;
@@ -81,9 +86,9 @@ namespace UserOperation.Services.Services
         public void UpdateStability(StabilityDto stability)
         {
             var dbStability = _stabilityRepository.GetById(stability.StabilityId);
-            var employee = _employeeRepository.GetById(stability.EmployeeId);
-            var criticality = _criticalityRepository.GetById(stability.CriticalityID);
-            var stabilityLevel = _stabilityLevelRepository.GetById(stability.StabilityLevelID);
+            var employee = _employeeRepository.GetById(stability.Employee.EmployeeId);
+            var criticality = _criticalityRepository.GetById(stability.Criticality.CriticalityID);
+            var stabilityLevel = _stabilityLevelRepository.GetById(stability.StabilityLevel.StabilityLevelID);
             dbStability.StabilityMonth = stability.StabilityMonth;
             dbStability.LeavingYear = stability.LeavingYear;
            

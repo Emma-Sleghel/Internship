@@ -16,6 +16,11 @@ namespace UserOperation.Web.Controllers
         private readonly IStabilityService _stabilityService;
         private readonly ILogger<StabilityController> _logger;
         private readonly IStabilityHelper _stabilityHelper;
+        private readonly List<ProjectViewModel> _projects;
+        private readonly List<LevelViewModel> _levels;
+        private readonly List<StabilityLevelViewModel> _stabilityLevels;
+        private readonly List<CriticalityViewModel> _criticalities;
+        private readonly List<PositionViewModel> _positions;
 
         public StabilityController(IStabilityService stabilityService, IMapper mapper, ILogger<StabilityController> logger, IStabilityHelper stabilityHelper)
         {
@@ -23,6 +28,11 @@ namespace UserOperation.Web.Controllers
             _mapper = mapper;
             _logger = logger; 
             _stabilityHelper = stabilityHelper;
+            _projects = _mapper.Map<List<ProjectViewModel>>(_stabilityHelper.GetProjects());
+            _levels = _mapper.Map<List<LevelViewModel>>(_stabilityHelper.GetLevels());
+            _stabilityLevels = _mapper.Map<List<StabilityLevelViewModel>>(_stabilityHelper.GetStabilityLevels());
+            _criticalities = _mapper.Map<List<CriticalityViewModel>>(_stabilityHelper.GetCriticalities());
+            _positions = _mapper.Map<List<PositionViewModel>>(_stabilityHelper.GetPositions());
         }
         
         public IActionResult Index()
@@ -32,20 +42,11 @@ namespace UserOperation.Web.Controllers
         }
         public IActionResult Create()
         { 
-            var projectList = _mapper.Map<List<ProjectViewModel>>(_stabilityHelper.GetProjects());
-            ViewBag.ProjectListDB = projectList;
-
-            var levelList = _mapper.Map<List<LevelViewModel>>(_stabilityHelper.GetLevels());
-            ViewBag.LevelListDB = levelList;
-
-            var stabilityLevelList = _mapper.Map<List<StabilityLevelViewModel>>(_stabilityHelper.GetStabilityLevels());
-            ViewBag.StabilityLevelListDB = stabilityLevelList;
-
-            var criticalityList = _mapper.Map<List<CriticalityViewModel>>(_stabilityHelper.GetCriticalities());
-            ViewBag.CriticalityListDB = criticalityList;
-
-            var positionList = _mapper.Map<List<PositionViewModel>>(_stabilityHelper.GetPositions());
-            ViewBag.PositionListDB = positionList;
+            ViewBag.ProjectListDB = _projects;    
+            ViewBag.LevelListDB = _levels;       
+            ViewBag.StabilityLevelListDB = _stabilityLevels;          
+            ViewBag.CriticalityListDB = _criticalities;
+            ViewBag.PositionListDB = _positions;
 
             return View();
         }
@@ -53,15 +54,21 @@ namespace UserOperation.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(StabilityViewModel model)
         {
-            
+
             var obj = _mapper.Map<StabilityDto>(model);
+            ViewBag.ProjectListDB = _projects;
+            ViewBag.LevelListDB = _levels;
+            ViewBag.StabilityLevelListDB = _stabilityLevels;
+            ViewBag.CriticalityListDB = _criticalities;
+            ViewBag.PositionListDB = _positions;
+
             if (ModelState.IsValid)
             {              
                 _stabilityService.CreateStability(obj);
                 TempData["success"] = "Employee created successfully";
                 return RedirectToAction("Index");
             }
-            return View(_mapper.Map<StabilityViewModel>(obj));
+            return View(model);
         }
         public IActionResult Edit(int id)
         {

@@ -1,4 +1,5 @@
-﻿@model StabilityViewModel
+﻿@using UserOperation.Services.Dtos
+@model StabilityViewModel
 
 <form method="post">
     <div class="border p-3 mt-4">
@@ -6,11 +7,11 @@
                 <h2 class="text-primary2"> Add employee</h2>
                 <hr />
         </div>
-        @*<div class="mb-3">
-            <label asp-for="Employee.EmployeeID"></label>
-            <input asp-for="Employee.EmployeeID" class="form-control"/>
-            <span asp-validation-for="Employee.EmployeeID" class="text-danger"></span>
-        </div>*@
+        <div class="mb-3">
+            <label asp-for="Employee.EmployeeId"></label>
+            <input asp-for="Employee.EmployeeId" class="form-control"/>
+            <span asp-validation-for="Employee.EmployeeId" class="text-danger"></span>
+        </div>
         <div class="mb-3">
             <label asp-for="Employee.EmployeeName"></label>
             <input asp-for="Employee.EmployeeName" class="form-control"/>
