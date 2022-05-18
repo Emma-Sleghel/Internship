@@ -56,9 +56,12 @@ namespace UserOperation.Services.Services
             return stabilities;
         }
         public int? CreateStability(StabilityDto stability)
-        {
-            var stabilityEntity = _stabilityRepository.Query(l => l.Employee.EmployeeID == stability.EmployeeId)    
-             .FirstOrDefault();
+        {   
+            var stabilityEntity = _stabilityRepository.Query()
+                .Include(x => x.Employee)
+                .Where(l => l.Employee.EmployeeID == stability.Employee.EmployeeId)
+                .FirstOrDefault();
+
             if (stabilityEntity != null)
             {
                 return null;
