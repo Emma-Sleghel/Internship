@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
 using UserOperation.Data.Entities;
 using UserOperation.Data.Repository;
 using UserOperation.Services.Dtos;
@@ -34,33 +35,31 @@ namespace UserOperation.Web.Controllers
             _criticalities = _mapper.Map<List<CriticalityViewModel>>(_stabilityHelper.GetCriticalities());
             _positions = _mapper.Map<List<PositionViewModel>>(_stabilityHelper.GetPositions());
         }
-        
-        public IActionResult Index()
+        public void ViewBagAsign(List<ProjectViewModel> _projects, List<LevelViewModel> _levels, List<StabilityLevelViewModel> _stabilityLevels
+            , List<CriticalityViewModel> _criticalities, List<PositionViewModel> _positions)
+        {
+            ViewBag.ProjectListDB = _projects;
+            ViewBag.LevelListDB = _levels;
+            ViewBag.StabilityLevelListDB = _stabilityLevels;
+            ViewBag.CriticalityListDB = _criticalities;
+            ViewBag.PositionListDB = _positions;
+        }
+    public IActionResult Index()
         {
             var objStabilityList = _stabilityService.GetAllStabilities();
             return View(objStabilityList);
         }
         public IActionResult Create()
-        { 
-            ViewBag.ProjectListDB = _projects;    
-            ViewBag.LevelListDB = _levels;       
-            ViewBag.StabilityLevelListDB = _stabilityLevels;          
-            ViewBag.CriticalityListDB = _criticalities;
-            ViewBag.PositionListDB = _positions;
-
+        {
+            ViewBagAsign(_projects,_levels,_stabilityLevels,_criticalities, _positions);
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(StabilityViewModel model)
         {
-
             var obj = _mapper.Map<StabilityDto>(model);
-            ViewBag.ProjectListDB = _projects;
-            ViewBag.LevelListDB = _levels;
-            ViewBag.StabilityLevelListDB = _stabilityLevels;
-            ViewBag.CriticalityListDB = _criticalities;
-            ViewBag.PositionListDB = _positions;
+            ViewBagAsign(_projects, _levels, _stabilityLevels, _criticalities, _positions);
 
             if (ModelState.IsValid)
             {              
