@@ -6,6 +6,8 @@
         public string EmployeeName { get; set; }
         public  PositionViewModel Position { get; set; }
         public LevelViewModel Level { get; set; }
-        public List<int> ProjectId { get; set; }
+        public IEnumerable<ProjectViewModel> Projects { get; set; }
+        public int[] ProjectsIds { get; set; }          
+        
     }
 }

@@ -12,7 +12,8 @@ namespace UserOperation.Services.Dtos
         public string EmployeeName { get; set; }
         public PositionDto Position { get; set; }
         public LevelDto Level { get; set; }
-        public List<int> ProjectIds { get; set; }
-        public List<ProjectDto> Projects { get; set; }
+        public IEnumerable<ProjectDto> Projects { get; set; }
+        public int[] ProjectIds { get; set; }
+       
     }
 }

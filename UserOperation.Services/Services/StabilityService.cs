@@ -31,6 +31,14 @@ namespace UserOperation.Services.Services
             _stabilityLevelRepository = stabilityLevelRepository;
         }
 
+        public ICollection<ProjectDto> GetAllProjects()
+        {
+            var projects = _mapper.Map<List<ProjectDto>>(_employeeRepository.GetAll()
+                .Select(pr => pr.Projects));
+
+            return projects;
+               
+        }
         public StabilityDto GetStabilityById(int id)
         {
             var stability = _mapper.Map<StabilityDto>(_stabilityRepository.GetById(id));
@@ -50,8 +58,7 @@ namespace UserOperation.Services.Services
         }
         public int? CreateStability(StabilityDto stability)
         {
-            var stabilityEntity = _stabilityRepository.Query(l => l.Employee.EmployeeID == stability.EmployeeId)
-                
+            var stabilityEntity = _stabilityRepository.Query(l => l.Employee.EmployeeID == stability.EmployeeId)    
              .FirstOrDefault();
             if (stabilityEntity != null)
             {
