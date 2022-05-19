@@ -7,8 +7,7 @@
         public int LeaveMonth { get; set; }
         public int LeaveYear { get; set; }
         public int ActiveHC { get; set; }
-       
-        public virtual ReasonViewModel PrimaryReason { get; set; }
-        public virtual ReasonViewModel SecondaryReason { get; set; }
+        public ReasonViewModel PrimaryReason { get; set; }
+        public ReasonViewModel SecondaryReason { get; set; }
     }
 }

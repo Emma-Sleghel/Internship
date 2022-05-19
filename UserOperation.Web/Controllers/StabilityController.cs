@@ -16,24 +16,24 @@ namespace UserOperation.Web.Controllers
         private readonly IMapper _mapper;
         private readonly IStabilityService _stabilityService;
         private readonly ILogger<StabilityController> _logger;
-        private readonly IStabilityHelper _stabilityHelper;
+        private readonly IBaseHelper _baseHelper;
         private readonly List<ProjectViewModel> _projects;
         private readonly List<LevelViewModel> _levels;
         private readonly List<StabilityLevelViewModel> _stabilityLevels;
         private readonly List<CriticalityViewModel> _criticalities;
         private readonly List<PositionViewModel> _positions;
 
-        public StabilityController(IStabilityService stabilityService, IMapper mapper, ILogger<StabilityController> logger, IStabilityHelper stabilityHelper)
+        public StabilityController(IStabilityService stabilityService, IMapper mapper, ILogger<StabilityController> logger, IBaseHelper baseHelper)
         {
             _stabilityService = stabilityService;
             _mapper = mapper;
             _logger = logger; 
-            _stabilityHelper = stabilityHelper;
-            _projects = _mapper.Map<List<ProjectViewModel>>(_stabilityHelper.GetProjects());
-            _levels = _mapper.Map<List<LevelViewModel>>(_stabilityHelper.GetLevels());
-            _stabilityLevels = _mapper.Map<List<StabilityLevelViewModel>>(_stabilityHelper.GetStabilityLevels());
-            _criticalities = _mapper.Map<List<CriticalityViewModel>>(_stabilityHelper.GetCriticalities());
-            _positions = _mapper.Map<List<PositionViewModel>>(_stabilityHelper.GetPositions());
+            _baseHelper = baseHelper;
+            _projects = _mapper.Map<List<ProjectViewModel>>(_baseHelper.GetProjects());
+            _levels = _mapper.Map<List<LevelViewModel>>(_baseHelper.GetLevels());
+            _stabilityLevels = _mapper.Map<List<StabilityLevelViewModel>>(_baseHelper.GetStabilityLevels());
+            _criticalities = _mapper.Map<List<CriticalityViewModel>>(_baseHelper.GetCriticalities());
+            _positions = _mapper.Map<List<PositionViewModel>>(_baseHelper.GetPositions());
         }
         public void ViewBagAsign(List<ProjectViewModel> _projects, List<LevelViewModel> _levels, List<StabilityLevelViewModel> _stabilityLevels
             , List<CriticalityViewModel> _criticalities, List<PositionViewModel> _positions)

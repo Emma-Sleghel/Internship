@@ -11,26 +11,28 @@ using UserOperation.Services.Dtos;
 namespace UserOperation.Services.Helpers
 {
    
-    public class StabilityHelper : IStabilityHelper
+    public class BaseHelper : IBaseHelper
     { 
         private IGenericRepository<Level> _levelRepository;
         private IGenericRepository<Project> _projectRepository;
         private IGenericRepository<StabilityLevel> _stabilityLevelRepository;
         private IGenericRepository<Criticality> _criticalityRepository;
         private IGenericRepository<Position> _positionRepository;
+        private IGenericRepository<Reason> _reasonRepository;
         private readonly IMapper _mapper;
 
 
-        public StabilityHelper(IGenericRepository<Level> levelRepository, IGenericRepository<Project> projectRepository,
+        public BaseHelper(IGenericRepository<Level> levelRepository, IGenericRepository<Project> projectRepository,
              IGenericRepository<StabilityLevel> stabilityLevelRepository,
              IGenericRepository<Criticality> criticalityRepository,
-             IGenericRepository<Position> positionRepository, IMapper mapper)    
+             IGenericRepository<Position> positionRepository, IGenericRepository<Reason> reasonRepository, IMapper mapper)    
         {
             _levelRepository = levelRepository;
             _projectRepository = projectRepository;
             _stabilityLevelRepository = stabilityLevelRepository;
             _criticalityRepository = criticalityRepository;
             _positionRepository = positionRepository;
+            _reasonRepository = reasonRepository;
             _mapper = mapper;
 
         }
@@ -54,6 +56,10 @@ namespace UserOperation.Services.Helpers
         public ICollection<PositionDto> GetPositions()
         {
             return _mapper.Map<List<PositionDto>>(_positionRepository.GetAll());
+        }
+        public ICollection<ReasonDto> GetReasons()
+        {
+            return _mapper.Map<List<ReasonDto>>(_reasonRepository.GetAll());
         }
     }
 }

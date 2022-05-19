@@ -3,6 +3,6 @@
     public class ReasonViewModel
     {
         public int ReasonId { get; set; }
-        public string ReasonName { get; set; }
+        public string? ReasonName { get; set; }
     }
 }

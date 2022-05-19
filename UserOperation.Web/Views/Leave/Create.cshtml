@@ -1,0 +1,76 @@
+﻿@model LeaveViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="create-form">
+<form method="post">
+    <div class="p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Add employee leave details</h2>
+            <hr />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Employee.EmployeeId">Personnel NO.:</label>
+        <input asp-for="Employee.EmployeeId" class="form-control-sm" />
+    </div>
+     <div class="mb-3">
+        <label asp-for="Employee.EmployeeName">Employee name:</label>
+        <input asp-for="Employee.EmployeeName" class="form-control-sm" />
+    </div>
+
+   <div class="mb-3">
+        <label>Project:</label>
+        @Html.ListBoxFor(model=>model.Employee.ProjectsIds,new MultiSelectList(ViewBag.ProjectListDB,"ProjectId", "ProjectName"))
+    </div>
+      
+
+   <div class="mb-3">
+        <label>Position name:</label>
+        @Html.DropDownListFor(model=>model.Employee.Position.PositionId,new SelectList(ViewBag.PositionListDB,"PositionId", "PositionName"))
+    </div>
+
+      
+
+    <div class="mb-3">
+        <label>Employee level:</label>
+         @Html.DropDownListFor(model=>model.Employee.Level.LevelId,new SelectList(ViewBag.LevelListDB,"LevelId", "LevelName"))
+    </div>
+       
+
+    <div class="mb-3">
+        <label asp-for="LeaveMonth">Leaving month:</label>
+        <input asp-for="LeaveMonth" class="form-control-sm" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="LeaveYear">Leaving year:</label>
+        <input asp-for="LeaveYear" class="form-control-sm" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ActiveHC">Active HC by month:</label>
+        <input asp-for="ActiveHC" class="form-control-sm" />
+    </div>
+
+    <div class="mb-3">
+        <label>Primary leaving reason:</label>
+        @Html.DropDownListFor(model=>model.PrimaryReason.ReasonId, new SelectList(ViewBag.ReasonListDB,"ReasonId","ReasonName"))
+    </div>
+
+    <div class="mb-3">
+        <label>Secondary leaving reason:</label>
+        @Html.DropDownListFor(model=>model.SecondaryReason.ReasonId, new SelectList(ViewBag.ReasonListDB,"ReasonId","ReasonName"))
+    </div>
+
+
+    <div class="end-btn">
+    <button type="submit" class="btn btn-primary">Add leave</button>
+    <a asp-controller="Leave" asp-action="Index" class="btn btn-secondary">Back to leaves list</a>
+    </div>
+
+</form>
+
+</div>
