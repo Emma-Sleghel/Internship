@@ -29,7 +29,6 @@
 
    <div class="mb-3">
         <label>Position name:</label>
-       @* <input asp-for="Position.PositionName" class="form-control-sm"/>*@
         @Html.DropDownListFor(model=>model.Employee.Position.PositionId,new SelectList(ViewBag.PositionListDB,"PositionId", "PositionName"))
     </div>
 
