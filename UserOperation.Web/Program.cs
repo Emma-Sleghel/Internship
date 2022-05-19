@@ -23,10 +23,7 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<ILeaveService, LeaveService>();
 builder.Services.AddScoped<IStabilityService, StabilityService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IStabilityHelper, StabilityHelper>();
-#region Authorization
-AddAuthorizationPolicies();
-#endregion
+builder.Services.AddScoped<IBaseHelper, BaseHelper>();
 
 var app = builder.Build();
 

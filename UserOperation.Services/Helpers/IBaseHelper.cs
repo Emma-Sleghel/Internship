@@ -7,12 +7,13 @@ using UserOperation.Services.Dtos;
 
 namespace UserOperation.Services.Helpers
 {
-    public interface IStabilityHelper
+    public interface IBaseHelper
     {
         ICollection<LevelDto> GetLevels();
         ICollection<ProjectDto> GetProjects();
         ICollection<StabilityLevelDto> GetStabilityLevels();
         ICollection<CriticalityDto> GetCriticalities();
         ICollection<PositionDto> GetPositions();
+        ICollection<ReasonDto> GetReasons();
     }
 }
