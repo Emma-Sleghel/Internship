@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Linq.Expressions;
+
 
 namespace UserOperation.Data.Repository
 {
@@ -15,14 +14,14 @@ namespace UserOperation.Data.Repository
             _context = context;
             entities = _context.Set<T>();
         }
-        public T GetById(int id)
+        public T GetById(object id)
         {
             return entities.Find(id);
         }
 
         public ICollection<T> GetAll()
         {
-            return entities.ToList();   
+            return entities.AsNoTracking().ToList();   
         }
 
         public void Create(T entity)

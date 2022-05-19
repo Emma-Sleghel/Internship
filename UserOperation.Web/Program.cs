@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using UserOperation.Data;
 using UserOperation.Data.Entities;
 using UserOperation.Data.Repository;
+using UserOperation.Services.Helpers;
 using UserOperation.Services.Services;
 using UserOperation.Web.Core;
 
@@ -22,6 +23,7 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<ILeaveService, LeaveService>();
 builder.Services.AddScoped<IStabilityService, StabilityService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IStabilityHelper, StabilityHelper>();
 #region Authorization
 AddAuthorizationPolicies();
 #endregion

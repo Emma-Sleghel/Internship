@@ -14,5 +14,6 @@ namespace UserOperation.Services.Services
         int? CreateStability(StabilityDto stability);
         void UpdateStability(StabilityDto stability);
         bool DeleteStability(int id);
+        ICollection<ProjectDto> GetAllProjects();
     }
 }

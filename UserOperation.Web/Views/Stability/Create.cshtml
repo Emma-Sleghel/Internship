@@ -1,0 +1,46 @@
+﻿@using UserOperation.Services.Dtos
+@model StabilityViewModel
+
+<form method="post">
+    <div class="border p-3 mt-4">
+            <div class="row pb-2">
+                <h2 class="text-primary2"> Add employee</h2>
+                <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Employee.EmployeeId"></label>
+            <input asp-for="Employee.EmployeeId" class="form-control"/>
+            <span asp-validation-for="Employee.EmployeeId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Employee.EmployeeName"></label>
+            <input asp-for="Employee.EmployeeName" class="form-control"/>
+            <span asp-validation-for="Employee.EmployeeName" class="text-danger"></span>
+        </div>
+
+         @Html.ListBoxFor(model=>model.Employee.ProjectsIds,new MultiSelectList(ViewBag.ProjectListDB,"ProjectId", "ProjectName"))
+
+         @Html.DropDownListFor(model=>model.Employee.Level.LevelId,new SelectList(ViewBag.LevelListDB,"LevelId", "LevelName"))
+         @Html.DropDownListFor(model=>model.StabilityLevel.StabilityLevelID,new SelectList(ViewBag.StabilityLevelListDB,"StabilityLevelID", "StabilityLevelName"))
+         @Html.DropDownListFor(model=>model.Criticality.CriticalityID,new SelectList(ViewBag.CriticalityListDB,"CriticalityID", "CriticalityName"))
+         @Html.DropDownListFor(model=>model.Employee.Position.PositionId,new SelectList(ViewBag.PositionListDB,"PositionId", "PositionName"))
+
+        
+        <div class="mb-3">
+            <label asp-for="StabilityMonth"></label>
+            <input asp-for="StabilityMonth" class="form-control"/>
+            <span asp-validation-for="StabilityMonth" class="text-danger"></span>
+        </div>
+        @*@Html.TextBoxFor(m => m.StabilityMonth, new { type = "month"})*@
+
+        <div class="mb-3">
+            <label asp-for="LeavingYear"></label>
+            <input asp-for="LeavingYear" class="form-control"/>
+            <span asp-validation-for="LeavingYear" class="text-danger"></span>
+        </div>
+       
+
+        <button type="submit" class="btn btn-primary" style="width:150px">Add</button>
+        <a asp-controller="Stability" asp-action="Index" class="btn btn-secondary"  style="width:150px">Back to table</a>
+    </div>
+</form>

@@ -4,7 +4,8 @@ namespace UserOperation.Data.Repository
 {
     public interface IGenericRepository<T> where T : class
     {
-        T GetById(int id);
+        T GetById(object id);
+        
         ICollection<T> GetAll();
         void Create(T entity);
         void Update(T entity);

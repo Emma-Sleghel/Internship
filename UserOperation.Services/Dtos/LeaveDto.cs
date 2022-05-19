@@ -9,7 +9,7 @@ namespace UserOperation.Services.Dtos
     public class LeaveDto
     {
         public int LeaveID { get; set; }
-        public int EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
         public EmployeeDto Employee { get; set; }
         public ReasonDto PrimaryReason { get; set; }
         public ReasonDto SecondaryReason { get; set; }
