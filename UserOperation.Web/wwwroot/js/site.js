@@ -31,4 +31,12 @@
         placeholder: "Select a critically",
         allowClear: true
     });
+    $(".place-reason").select2({
+        placeholder: "Select a reason",
+        allowClear: true
+    });
+    $(".place-leave-month").select2({
+        placeholder: "Select a leave month",
+        allowClear: true
+    });
 });

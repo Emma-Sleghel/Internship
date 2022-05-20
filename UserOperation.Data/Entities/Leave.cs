@@ -11,7 +11,7 @@ namespace UserOperation.Data.Entities
     {
         public int LeaveID { get; set; }
         public virtual Employee Employee { get; set; }
-        public int LeaveMonth { get; set; }
+        public string LeaveMonth { get; set; }
         public int LeaveYear { get; set; }
         public int ActiveHC { get; set; }
         public int PrimaryReasonId { get; set; }
