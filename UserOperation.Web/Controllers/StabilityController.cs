@@ -37,18 +37,21 @@ namespace UserOperation.Web.Controllers
         }
         public void ViewBagAsign(List<ProjectViewModel> _projects, List<LevelViewModel> _levels, List<StabilityLevelViewModel> _stabilityLevels
             , List<CriticalityViewModel> _criticalities, List<PositionViewModel> _positions)
-        {
-            ViewBag.ProjectListDB = _projects;
-            ViewBag.LevelListDB = _levels;
-            ViewBag.StabilityLevelListDB = _stabilityLevels;
-            ViewBag.CriticalityListDB = _criticalities;
-            ViewBag.PositionListDB = _positions;
+        {        
+            ViewBag.Projects = new MultiSelectList(_projects, "ProjectId", "ProjectName");
+            ViewBag.Levels = new SelectList(_levels, "LevelId", "LevelName");
+            ViewBag.StabilityLevels = new SelectList(_stabilityLevels, "StabilityLevelID", "StabilityLevelName");
+            ViewBag.Criticalities = new SelectList(_criticalities, "CriticalityID", "CriticalityName");
+            ViewBag.Positions = new SelectList(_positions, "PositionId", "PositionName");
+            ViewBag.Months = new SelectList(new List<string> { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" });
         }
-    public IActionResult Index()
+        public IActionResult Index()
         {
             var objStabilityList = _stabilityService.GetAllStabilities();
             return View(objStabilityList);
         }
+
+
         public IActionResult Create()
         {
             ViewBagAsign(_projects,_levels,_stabilityLevels,_criticalities, _positions);
@@ -60,7 +63,7 @@ namespace UserOperation.Web.Controllers
         {
             var obj = _mapper.Map<StabilityDto>(model);
             ViewBagAsign(_projects, _levels, _stabilityLevels, _criticalities, _positions);
-
+            
             if (ModelState.IsValid)
             {              
                 _stabilityService.CreateStability(obj);
