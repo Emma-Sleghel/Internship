@@ -1,46 +1,80 @@
 ﻿@using UserOperation.Services.Dtos
 @model StabilityViewModel
 
-<form method="post">
+<form method="post" class="create-form">
     <div class="border p-3 mt-4">
             <div class="row pb-2">
-                <h2 class="text-primary2"> Add employee</h2>
+                <h2 class="text-primary2"> Add stability employee</h2>
                 <hr />
         </div>
         <div class="mb-3">
             <label asp-for="Employee.EmployeeId"></label>
-            <input asp-for="Employee.EmployeeId" class="form-control"/>
+            <input placeholder="Enter personnel No." asp-for="Employee.EmployeeId" class="form-control"/>
             <span asp-validation-for="Employee.EmployeeId" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Employee.EmployeeName"></label>
-            <input asp-for="Employee.EmployeeName" class="form-control"/>
+            <input placeholder="Enter employee name" asp-for="Employee.EmployeeName" class="form-control"/>
             <span asp-validation-for="Employee.EmployeeName" class="text-danger"></span>
         </div>
-
-         @Html.ListBoxFor(model=>model.Employee.ProjectsIds,new MultiSelectList(ViewBag.ProjectListDB,"ProjectId", "ProjectName"))
-
-         @Html.DropDownListFor(model=>model.Employee.Level.LevelId,new SelectList(ViewBag.LevelListDB,"LevelId", "LevelName"))
-         @Html.DropDownListFor(model=>model.StabilityLevel.StabilityLevelID,new SelectList(ViewBag.StabilityLevelListDB,"StabilityLevelID", "StabilityLevelName"))
-         @Html.DropDownListFor(model=>model.Criticality.CriticalityID,new SelectList(ViewBag.CriticalityListDB,"CriticalityID", "CriticalityName"))
-         @Html.DropDownListFor(model=>model.Employee.Position.PositionId,new SelectList(ViewBag.PositionListDB,"PositionId", "PositionName"))
-
         
         <div class="mb-3">
-            <label asp-for="StabilityMonth"></label>
-            <input asp-for="StabilityMonth" class="form-control"/>
-            <span asp-validation-for="StabilityMonth" class="text-danger"></span>
+            <label class="control-label" asp-for="Employee.ProjectsIds"></label>
+            <select asp-for="Employee.ProjectsIds" class="form-control multiple-select" asp-items="ViewBag.Projects" multiple="multiple">
+            </select>
+            <span asp-validation-for="Employee.ProjectsIds" class="text-danger"></span>
         </div>
-        @*@Html.TextBoxFor(m => m.StabilityMonth, new { type = "month"})*@
-
-        <div class="mb-3">
-            <label asp-for="LeavingYear"></label>
-            <input asp-for="LeavingYear" class="form-control"/>
-            <span asp-validation-for="LeavingYear" class="text-danger"></span>
+         
+        <div class="d-flex mb-3">
+            <div class="d-flex flex-column w-100">
+                <label class="control-label" asp-for="Employee.Position.PositionId"></label>
+                <select asp-for="Employee.Position.PositionId" class="form-control place-position" asp-items="ViewBag.Positions">
+                    <option></option>
+                </select>
+                <span asp-validation-for="Employee.Position.PositionId" class="text-danger"></span>
+            </div>
+            <div class="d-flex flex-column w-100">
+                <label class="control-label" asp-for="Employee.Level.LevelId"></label>
+                <select asp-for="Employee.Level.LevelId" class="form-control place-level" asp-items="ViewBag.Levels" >
+                    <option></option>
+                </select>
+                 <span asp-validation-for="Employee.Level.LevelId" class="text-danger"></span>
+            </div>
         </div>
-       
 
-        <button type="submit" class="btn btn-primary" style="width:150px">Add</button>
-        <a asp-controller="Stability" asp-action="Index" class="btn btn-secondary"  style="width:150px">Back to table</a>
+        <div class="d-flex mb-3">
+            <div class="d-flex flex-column w-100">
+                <label class="control-label" asp-for="StabilityMonth"></label>
+                <select asp-for="StabilityMonth" class="form-control place-month" asp-items="ViewBag.Months" >
+                    <option></option>
+                </select>
+                <span asp-validation-for="StabilityMonth" class="text-danger"></span>
+            </div>
+            <div class="d-flex flex-column w-100">
+                <label class="control-label" asp-for="LeavingYear"></label>
+                <input placeholder="Select a leaving year" asp-for="LeavingYear" class="form-control "  id="datepicker" />
+                <span asp-validation-for="LeavingYear" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="d-flex mb-3" >
+            <div class="d-flex flex-column w-100">
+                <label class="control-label" asp-for="StabilityLevel.StabilityLevelID"></label>
+                <select asp-for="StabilityLevel.StabilityLevelID" class="form-control place-stalevel" asp-items="ViewBag.StabilityLevels" >
+                    <option></option>
+                </select>
+                <span asp-validation-for="StabilityLevel.StabilityLevelID" class="text-danger"></span>
+            </div>
+            <div class="d-flex flex-column w-100 ">
+                <label class="control-label" asp-for="Criticality.CriticalityID"></label>
+                <select asp-for="Criticality.CriticalityID" class="form-control place-crit" asp-items="ViewBag.Criticalities" >
+                    <option></option>
+                </select>
+                <span asp-validation-for="Criticality.CriticalityID" class="text-danger"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary form-butns">Add</button>
+        <a asp-controller="Stability" asp-action="Index" class="btn btn-secondary form-butns">Back to table</a>
     </div>
 </form>

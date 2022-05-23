@@ -1,10 +1,14 @@
-﻿namespace UserOperation.Web.Models
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace UserOperation.Web.Models
 {
     public class LevelViewModel
     {
-        
-           public int LevelId { get; set; }
-           public string? LevelName { get; set; }
+        [DisplayName("Employee level")]
+        [Required(ErrorMessage = "Please select employee level")]
+        public int? LevelId { get; set; }
+        public string? LevelName { get; set; }
         
     }
 }

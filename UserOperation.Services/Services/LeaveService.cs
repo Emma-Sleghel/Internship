@@ -19,13 +19,15 @@ namespace UserOperation.Services.Services
         private IGenericRepository<Leave> _leaveRepository;
         private IGenericRepository<Employee> _employeeRepository;
         private IGenericRepository<Reason> _reasonRepository;
+        private readonly IEmployeeService _employeeService;
 
-        public LeaveService(IMapper mapper, IGenericRepository<Leave> leaveRepository, IGenericRepository<Employee> employeeRepository, IGenericRepository<Reason> reasonRepository)
+        public LeaveService(IMapper mapper, IGenericRepository<Leave> leaveRepository, IGenericRepository<Employee> employeeRepository, IGenericRepository<Reason> reasonRepository, IEmployeeService employeeService)
         {
             _mapper = mapper;
             _leaveRepository = leaveRepository;
             _employeeRepository = employeeRepository;
             _reasonRepository = reasonRepository;
+            _employeeService = employeeService;
         }
 
         public LeaveDto GetLeaveById(int id)
@@ -47,14 +49,20 @@ namespace UserOperation.Services.Services
         }
         public int? CreateLeave(LeaveDto leave)
         {
-            var leaveEntity = _leaveRepository.Query(l=>l.Employee.EmployeeID == leave.EmployeeId)
+            var leaveEntity = _leaveRepository.Query().Include(e=>e.Employee).Where(l=>l.Employee.EmployeeID == leave.Employee.EmployeeId)
                 .FirstOrDefault();
+
             if (leaveEntity != null)
                 return null;
             
-            var employee = _employeeRepository.GetById(leave.EmployeeId);     
-            var primaryReason = _reasonRepository.GetById(leave.PrimaryReasonId);
-            var secondaryReason = _reasonRepository.GetById(leave.SecondaryReasonId);
+            var employee = _employeeRepository.GetById(leave.Employee.EmployeeId);
+            if (employee == null)
+            {
+                _employeeService.CreateEmployee(leave.Employee);
+                employee = _employeeRepository.GetById(leave.Employee.EmployeeId);
+            }
+            var primaryReason = _reasonRepository.GetById(leave.PrimaryReason.ReasonId);
+            var secondaryReason = _reasonRepository.GetById(leave.SecondaryReason.ReasonId);
             var leaveMap = _mapper.Map<Leave>(leave);
 
             leaveMap.Employee = employee;

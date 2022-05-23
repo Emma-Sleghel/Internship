@@ -1,0 +1,101 @@
+﻿@model LeaveViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="create-form">
+<form method="post">
+    <div class="p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Add employee leave details</h2>
+            <hr />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="control-label" asp-for="Employee.EmployeeId">Personnel No.:</label>
+        <input placeholder="Add Personnel No." asp-for="Employee.EmployeeId" class="form-control" />
+        <span asp-validation-for="Employee.EmployeeId" class="text-danger"></span>
+    </div>
+     <div class="mb-3">
+        <label class="control-label" asp-for="Employee.EmployeeName">Employee name:</label>
+        <input placeholder="Add employee name" asp-for="Employee.EmployeeName" class="form-control" />
+        <span asp-validation-for="Employee.EmployeeName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+            <label class="control-label" asp-for="Employee.ProjectsIds"></label>
+            <select asp-for="Employee.ProjectsIds" class="form-control multiple-select" asp-items="ViewBag.Projects" multiple="multiple">
+            </select>
+            <span asp-validation-for="Employee.ProjectsIds" class="text-danger"></span>
+    </div>
+      
+
+ <div class="d-flex mb-3">
+            <div class="d-flex flex-column w-100">
+                <label class="control-label" asp-for="Employee.Position.PositionId"></label>
+                <select asp-for="Employee.Position.PositionId" class="form-control place-position" asp-items="ViewBag.Positions">
+                    <option></option>
+                </select>
+                <span asp-validation-for="Employee.Position.PositionId" class="text-danger"></span>
+ </div>
+
+      
+
+  <div class="d-flex flex-column w-100">
+                <label class="control-label" asp-for="Employee.Level.LevelId"></label>
+                <select asp-for="Employee.Level.LevelId" class="form-control place-level" asp-items="ViewBag.Levels" >
+                    <option></option>
+                </select>
+                 <span asp-validation-for="Employee.Level.LevelId" class="text-danger"></span>
+            </div>
+        </div>
+       
+
+   <div class="d-flex mb-3">
+            <div class="d-flex flex-column w-100">
+                <label class="control-label" asp-for="LeaveMonth">Leave month</label>
+                <select asp-for="LeaveMonth" class="form-control place-leave-month" asp-items="ViewBag.Months" >
+                    <option></option>
+                </select>
+                <span asp-validation-for="LeaveMonth" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex flex-column w-100">
+                <label class="control-label" asp-for="LeaveYear">Leave year</label>
+                <input placeholder="Select a leave year" asp-for="LeaveYear" class="form-control"  id="datepicker" />
+                <span asp-validation-for="LeaveYear" class="text-danger"></span>
+            </div>
+        </div>
+
+    <div class="mb-3">
+        <label class="control-label" asp-for="ActiveHC">Active HC by month:</label>
+        <input placeholder="Add Active HC" asp-for="ActiveHC" class="form-control" />
+        <span asp-validation-for="ActiveHC" class="text-danger"></span>
+    </div>
+
+
+<div class="d-flex flex-column w-100 mb-3">
+        <label class="control-label" asp-for="PrimaryReason.ReasonId">Add primary reason:</label>
+        <select asp-for="PrimaryReason.ReasonId" class="form-control place-reason" asp-items="ViewBag.Reasons" >
+        <option></option>
+        </select>
+        <span asp-validation-for="PrimaryReason.ReasonId" class="text-danger"></span>
+</div>
+
+ <div class="d-flex flex-column w-100 mb-3">
+        <label class="control-label" asp-for="SecondaryReason.ReasonId">Add secondary reason:</label>
+        <select asp-for="SecondaryReason.ReasonId" class="form-control place-reason" asp-items="ViewBag.Reasons" >
+        <option></option>
+        </select>
+        <span asp-validation-for="SecondaryReason.ReasonId" class="text-danger"></span>
+ </div>
+
+    
+   <button type="submit" class="btn btn-primary form-butns">Add leave</button>
+   <a asp-controller="Leave" asp-action="Index" class="btn btn-secondary form-butns">Back to leaves list</a>
+   
+
+</form>
+
+</div>

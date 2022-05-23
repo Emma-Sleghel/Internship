@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using UserOperation.Data.Entities;
 using UserOperation.Services.Dtos;
+using UserOperation.Services.Helpers;
 using UserOperation.Services.Services;
 using UserOperation.Web.Models;
 
@@ -12,13 +14,37 @@ namespace UserOperation.Web.Controllers
         private readonly IMapper _mapper;
         private readonly ILeaveService _leaveService;
         private readonly ILogger<LeaveController> _logger;
-        public LeaveController(ILeaveService leaveService,IMapper mapper, ILogger<LeaveController> logger)
+        private readonly IBaseHelper _baseHelper;
+
+        private readonly List<ProjectViewModel> _projects;
+        private readonly List<LevelViewModel> _levels;    
+        private readonly List<ReasonViewModel> _reasons;
+        private readonly List<PositionViewModel> _positions;
+
+
+        public LeaveController(ILeaveService leaveService,IMapper mapper, ILogger<LeaveController> logger, IBaseHelper baseHelper)
         {
             _leaveService = leaveService;
             _mapper = mapper;
             _logger = logger;
+            _baseHelper = baseHelper;
+
+            _projects = _mapper.Map<List<ProjectViewModel>>(_baseHelper.GetProjects());
+            _levels = _mapper.Map<List<LevelViewModel>>(_baseHelper.GetLevels());
+            _reasons = _mapper.Map<List<ReasonViewModel>>(_baseHelper.GetReasons());
+            _positions = _mapper.Map<List<PositionViewModel>>(_baseHelper.GetPositions());
 
         }
+        public void ViewBagAsign(List<ProjectViewModel> _projects, List<LevelViewModel> _levels,
+            List<ReasonViewModel> _reasons, List<PositionViewModel> _positions)
+        {
+            ViewBag.Projects = new MultiSelectList(_projects, "ProjectId", "ProjectName");
+            ViewBag.Levels = new SelectList(_levels, "LevelId", "LevelName");
+            ViewBag.Positions = new SelectList(_positions, "PositionId", "PositionName");
+            ViewBag.Months = new SelectList(new List<string> { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" });
+            ViewBag.Reasons = new SelectList(_reasons, "ReasonId", "ReasonName");
+        }
+
         public IActionResult Index()
         {
             var objLeaveList = _leaveService.GetAllLeaves();
@@ -27,6 +53,7 @@ namespace UserOperation.Web.Controllers
 
         public IActionResult Create()
         {
+            ViewBagAsign(_projects, _levels, _reasons, _positions);
             return View();
         }
 
@@ -35,20 +62,16 @@ namespace UserOperation.Web.Controllers
         public IActionResult Create(LeaveViewModel model)
         {
             var obj = _mapper.Map<LeaveDto>(model);
+            ViewBagAsign(_projects, _levels, _reasons, _positions);
+
+
             if (ModelState.IsValid)
-            {              
-                var response = _leaveService.CreateLeave(obj);
-                if(response == null)
-                {
-                    return View(obj);
-                }
-                else
-                {
-                    TempData["success"] = "Employee created successfully";
-                    return RedirectToAction("Index");
-                }
+            {
+                _leaveService.CreateLeave(obj);
+                TempData["success"] = "Employee created successfully";
+                return RedirectToAction("Index");
             }
-            return View(obj);
+            return View(model);
         }
 
         public IActionResult Edit(int id)

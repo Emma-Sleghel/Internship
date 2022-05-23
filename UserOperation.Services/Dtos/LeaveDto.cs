@@ -13,7 +13,7 @@ namespace UserOperation.Services.Dtos
         public EmployeeDto Employee { get; set; }
         public ReasonDto PrimaryReason { get; set; }
         public ReasonDto SecondaryReason { get; set; }
-        public int LeaveMonth { get; set; }
+        public string LeaveMonth { get; set; }
         public int LeaveYear { get; set; }
         public int ActiveHC { get; set; }
         public int PrimaryReasonId { get; set; }
