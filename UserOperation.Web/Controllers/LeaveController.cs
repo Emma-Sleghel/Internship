@@ -119,18 +119,26 @@ namespace UserOperation.Web.Controllers
             {
                 return NotFound();
             }
-            return View(leaveFromDb);
+            return PartialView("_DeleteLeavePartial",leaveFromDb);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
 
         public IActionResult DeleteLeave(int id)
-        {          
+        {
+            var leaveFromDb = _leaveService.GetLeaveById(id);
+
+            if (leaveFromDb == null)
+            {
+                return NotFound();
+            }
+            _leaveService.DeleteLeave(id);
+
             if (!_leaveService.DeleteLeave(id))
                 ModelState.AddModelError("", "Something went wrong deleting employee");
-            TempData["success"] = "Employee deleted successfully";
-            return RedirectToAction("Index");
+
+            return PartialView("_DeleteLeavePartial", leaveFromDb);
         }
     }
 }

@@ -19,12 +19,10 @@ namespace UserOperation.Web.Controllers
         private readonly List<StabilityLevelViewModel> _stabilityLevels;
         private readonly List<CriticalityViewModel> _criticalities;
         private readonly List<PositionViewModel> _positions;
-        private readonly IEmployeeService _employeeService;
 
         public StabilityController(IStabilityService stabilityService, IMapper mapper, ILogger<StabilityController> logger, IBaseHelper baseHelper)
         {
             _stabilityService = stabilityService;
-            _employeeService = employeeService;
             _mapper = mapper;
             _logger = logger; 
             _baseHelper = baseHelper;

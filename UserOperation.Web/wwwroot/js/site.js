@@ -52,6 +52,20 @@
             }
         });
     });
+
+    $("#table-one").on("click", "#viewbtn", function () {
+        var id = $(this).closest("tr").find("td").eq(0).html();
+        $.ajax({
+            url: "leave/delete",
+            data: { id: id },
+            success: function (data) {
+                $("#showmodal .modal-dialog").html(data);
+                $("#showmodal").modal("show");
+            }
+        });
+    });
+
+
     $("#showmodal").on('click', '[data-save="modal"]', function () {
         var form = $(this).parents('.modal').find('form');
         var actionUrl = form.attr('action');
