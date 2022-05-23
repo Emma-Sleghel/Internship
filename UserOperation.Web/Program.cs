@@ -25,6 +25,10 @@ builder.Services.AddScoped<IStabilityService, StabilityService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IBaseHelper, BaseHelper>();
 
+#region Authorization
+AddAuthorizationPolicies();
+#endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

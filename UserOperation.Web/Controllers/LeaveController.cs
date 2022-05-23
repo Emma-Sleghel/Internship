@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using UserOperation.Data.Entities;
 using UserOperation.Services.Dtos;
 using UserOperation.Services.Helpers;
@@ -37,10 +38,11 @@ namespace UserOperation.Web.Controllers
         public void ViewBagAsign(List<ProjectViewModel> _projects, List<LevelViewModel> _levels,
             List<ReasonViewModel> _reasons, List<PositionViewModel> _positions)
         {
-            ViewBag.ProjectListDB = _projects;
-            ViewBag.LevelListDB = _levels;
-            ViewBag.ReasonListDB = _reasons;
-            ViewBag.PositionListDB = _positions;
+            ViewBag.Projects = new MultiSelectList(_projects, "ProjectId", "ProjectName");
+            ViewBag.Levels = new SelectList(_levels, "LevelId", "LevelName");
+            ViewBag.Positions = new SelectList(_positions, "PositionId", "PositionName");
+            ViewBag.Months = new SelectList(new List<string> { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" });
+            ViewBag.Reasons = new SelectList(_reasons, "ReasonId", "ReasonName");
         }
 
         public IActionResult Index()
