@@ -40,7 +40,12 @@ namespace UserOperation.Services.Services
         }
         public StabilityDto GetStabilityById(int id)
         {
-            var stability = _mapper.Map<StabilityDto>(_stabilityRepository.GetById(id));
+            var stability = _mapper.Map<StabilityDto>(_stabilityRepository.Query().Where(x => x.StabilityId == id)
+             .Include(x => x.Employee).ThenInclude(x => x.Level)
+             .Include(x => x.Employee).ThenInclude(x => x.Position)
+             .Include(x => x.Employee).ThenInclude(x => x.Projects)
+             .Include(x => x.StabilityLevel)
+             .Include(x => x.Criticality).FirstOrDefault());
             return stability;
         }
 
@@ -94,8 +99,15 @@ namespace UserOperation.Services.Services
             var stabilityLevel = _stabilityLevelRepository.GetById(stability.StabilityLevel.StabilityLevelID);
             dbStability.StabilityMonth = stability.StabilityMonth;
             dbStability.LeavingYear = stability.LeavingYear;
-           
-
+            if (employee == null)
+            {
+                _employeeService.CreateEmployee(stability.Employee);
+            }
+            else
+            {
+                _employeeService.UpdateEmployee(stability.Employee);
+            }
+           employee = _employeeRepository.GetById(stability.Employee.EmployeeId);
             dbStability.Employee = employee;
             dbStability.Criticality = criticality;
             dbStability.StabilityLevel = stabilityLevel;
@@ -117,10 +129,6 @@ namespace UserOperation.Services.Services
             return true;
         }
     }
-
-
-
-
 
 }
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,22 +50,21 @@ namespace UserOperation.Services.Services
             employeeMap.Projects = projects;
             _employeeRepository.Create(employeeMap);       
         }
-
         public void DeleteEmployee(int id)
         {
             Employee employee = _employeeRepository.GetById(id);
             _employeeRepository.Delete(employee);
         }
-
         public void UpdateEmployee(EmployeeDto employee)
         {
-            var dbEmployee = _employeeRepository.GetById(employee.EmployeeId);
-            var level = _levelRepository.GetById(employee.Level.LevelId);
-            var position = _positionRepository.GetById(employee.Position.PositionId);
-            var projects = _projectRepository.Query(x => employee.ProjectsIds.Contains(x.ProjectId)).ToList();
+            var  dbEmployee =  _employeeRepository.Query().Include(x=>x.Projects).Where(x=>x.EmployeeID==employee.EmployeeId).FirstOrDefault();
+            var level =_levelRepository.GetById(employee.Level.LevelId);
+            var position =_positionRepository.GetById(employee.Position.PositionId);
+            var projects =  _projectRepository.Query(x => employee.ProjectsIds.Contains(x.ProjectId)).ToList();
             
             dbEmployee.Level = level;
             dbEmployee.Position = position;
+            dbEmployee.Projects.Clear();        
             dbEmployee.Projects = projects;
             dbEmployee.EmployeeName = employee.EmployeeName;
             _employeeRepository.Update(dbEmployee);

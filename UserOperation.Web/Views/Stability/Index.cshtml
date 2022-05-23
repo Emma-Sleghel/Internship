@@ -61,9 +61,11 @@
                     @obj.Criticality.CriticalityName
                 </td>
                 <td>
-                    <a asp-controller="Stability" asp-action="Edit" asp-route-id="@obj.Employee.EmployeeId">
+                    
+                    <a asp-controller="Stability" asp-action="Edit" asp-route-id="@obj.StabilityId" >  
                         <i class="bi bi-pencil-square"></i>
-                    </a>
+                    </a>  
+                    
                   </td> 
                  <td>
                     <a asp-controller="Stability" asp-action="Delete" asp-route-id="@obj.Employee.EmployeeId">
@@ -74,5 +76,6 @@
         }
     </tbody>
 </table>
+
 
 

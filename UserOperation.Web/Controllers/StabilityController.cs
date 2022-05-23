@@ -22,6 +22,8 @@ namespace UserOperation.Web.Controllers
         private readonly List<StabilityLevelViewModel> _stabilityLevels;
         private readonly List<CriticalityViewModel> _criticalities;
         private readonly List<PositionViewModel> _positions;
+        private readonly List<string> _months=new List<string> {"January","February", "March", "April", "June","July","August","September"
+            ,"October","November","December"};
 
         public StabilityController(IStabilityService stabilityService, IMapper mapper, ILogger<StabilityController> logger, IStabilityHelper stabilityHelper)
         {
@@ -38,17 +40,20 @@ namespace UserOperation.Web.Controllers
         public void ViewBagAsign(List<ProjectViewModel> _projects, List<LevelViewModel> _levels, List<StabilityLevelViewModel> _stabilityLevels
             , List<CriticalityViewModel> _criticalities, List<PositionViewModel> _positions)
         {
-            ViewBag.ProjectListDB = _projects;
+            ViewBag.ProjectListDB = new MultiSelectList(_projects, "ProjectId", "ProjectName");
+            //ViewBag.ProjectListDB = _projects;
             ViewBag.LevelListDB = _levels;
             ViewBag.StabilityLevelListDB = _stabilityLevels;
             ViewBag.CriticalityListDB = _criticalities;
             ViewBag.PositionListDB = _positions;
+            ViewBag.Months = _months;
         }
     public IActionResult Index()
         {
             var objStabilityList = _stabilityService.GetAllStabilities();
             return View(objStabilityList);
         }
+      
         public IActionResult Create()
         {
             ViewBagAsign(_projects,_levels,_stabilityLevels,_criticalities, _positions);
@@ -69,18 +74,22 @@ namespace UserOperation.Web.Controllers
             }
             return View(model);
         }
+        [HttpGet]
         public IActionResult Edit(int id)
         {
+            ViewBagAsign(_projects, _levels, _stabilityLevels, _criticalities, _positions);
             if (id == 0)
             {
                 return NotFound();
             }
+            
             var stabilityFromDb = _stabilityService.GetStabilityById(id);
             if (stabilityFromDb == null)
             {
                 return NotFound();
             }
-            return View(stabilityFromDb);
+            var obj = _mapper.Map<StabilityViewModel>(stabilityFromDb);
+            return View(obj);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -88,12 +97,14 @@ namespace UserOperation.Web.Controllers
         { 
 
             var obj = _mapper.Map<StabilityDto>(model);
+            ViewBagAsign(_projects, _levels, _stabilityLevels, _criticalities, _positions);
             if (ModelState.IsValid)
             {
                 _stabilityService.UpdateStability(obj);
                 return RedirectToAction("Index");
             }
-            return View(obj);
+
+            return View(model);
         }
         public IActionResult Delete(int id)
         {
