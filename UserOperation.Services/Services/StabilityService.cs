@@ -125,7 +125,7 @@ namespace UserOperation.Services.Services
             }
 
             _stabilityRepository.Delete(stability);
-
+            
             return true;
         }
     }

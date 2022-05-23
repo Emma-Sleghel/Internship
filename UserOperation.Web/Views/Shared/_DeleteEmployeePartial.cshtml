@@ -1,0 +1,19 @@
+﻿@using UserOperation.Services.Dtos
+@model StabilityDto
+
+<div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Are you sure you want to delete stability for this employee?</h4>
+        <form  method="post" asp-action="DeleteStability">
+            <input type="hidden" value="@Model.StabilityId" name="Id"/>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-save="modal">Delete</button>
+      </div>
+</div>
