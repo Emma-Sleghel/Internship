@@ -1,18 +1,6 @@
 ﻿$(document).ready(function () {
     $("table").DataTable();
-<<<<<<< HEAD
-    var dp = $("#datepicker").datepicker({
-        format: "yyyy",
-        viewMode: "years",
-        minViewMode: "years",
-        autoclose: true
-    });
-   
-    $('.project-select').select2();
-   
-    dp.on('changeYear', function (e) {
-        alert("Year changed ");
-=======
+
     $('.multiple-select').select2({
         placeholder: "Select projects"
     });
@@ -51,6 +39,5 @@
     $(".place-leave-month").select2({
         placeholder: "Select a leave month",
         allowClear: true
->>>>>>> dev
     });
 });
