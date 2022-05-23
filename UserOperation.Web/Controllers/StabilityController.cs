@@ -78,11 +78,12 @@ namespace UserOperation.Web.Controllers
             {
                 return NotFound();
             }
-            var stabilityFromDb = _stabilityService.GetStabilityById(id);
+            var stabilityFromDb = _mapper.Map<StabilityViewModel>(_stabilityService.GetStabilityById(id));
             if (stabilityFromDb == null)
             {
                 return NotFound();
             }
+            ViewBagAsign(_projects, _levels, _stabilityLevels, _criticalities, _positions);
             return View(stabilityFromDb);
         }
         [HttpPost]
@@ -93,10 +94,11 @@ namespace UserOperation.Web.Controllers
             var obj = _mapper.Map<StabilityDto>(model);
             if (ModelState.IsValid)
             {
+                ViewBagAsign(_projects, _levels, _stabilityLevels, _criticalities, _positions);
                 _stabilityService.UpdateStability(obj);
                 return RedirectToAction("Index");
             }
-            return View(obj);
+            return View(model);
         }
         public IActionResult Delete(int id)
         {

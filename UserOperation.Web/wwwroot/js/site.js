@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     $("table").DataTable();
+
     $('.multiple-select').select2({
         placeholder: "Select projects"
     });
