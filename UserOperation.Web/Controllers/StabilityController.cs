@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
-using UserOperation.Data.Entities;
-using UserOperation.Data.Repository;
 using UserOperation.Services.Dtos;
 using UserOperation.Services.Helpers;
 using UserOperation.Services.Services;
@@ -22,10 +19,12 @@ namespace UserOperation.Web.Controllers
         private readonly List<StabilityLevelViewModel> _stabilityLevels;
         private readonly List<CriticalityViewModel> _criticalities;
         private readonly List<PositionViewModel> _positions;
+        private readonly IEmployeeService _employeeService;
 
-        public StabilityController(IStabilityService stabilityService, IMapper mapper, ILogger<StabilityController> logger, IStabilityHelper stabilityHelper)
+        public StabilityController(IStabilityService stabilityService, IMapper mapper, ILogger<StabilityController> logger, IStabilityHelper stabilityHelper, IEmployeeService employeeService)
         {
             _stabilityService = stabilityService;
+            _employeeService = employeeService;
             _mapper = mapper;
             _logger = logger; 
             _stabilityHelper = stabilityHelper;
@@ -50,7 +49,6 @@ namespace UserOperation.Web.Controllers
             var objStabilityList = _stabilityService.GetAllStabilities();
             return View(objStabilityList);
         }
-
 
         public IActionResult Create()
         {
@@ -98,27 +96,37 @@ namespace UserOperation.Web.Controllers
             }
             return View(obj);
         }
+
+        [HttpGet]
         public IActionResult Delete(int id)
         {
-            if ( id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
             var stabilityFromDb = _stabilityService.GetStabilityById(id);
+     
             if (stabilityFromDb == null)
             {
                 return NotFound();
             }
-            return View(stabilityFromDb);
+            return PartialView("_DeleteEmployeePartial", stabilityFromDb); 
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteStability(int id)
         {
-            if (!_stabilityService.DeleteStability(id))
-                ModelState.AddModelError("","Something went wrong deleting employee");
+            var stabilityFromDb = _stabilityService.GetStabilityById(id);
+            if (stabilityFromDb == null)
+            {
+                return NotFound();
+            }
+            _stabilityService.DeleteStability(id);
 
-            return RedirectToAction("Index");
+            if (!_stabilityService.DeleteStability(id))
+                ModelState.AddModelError("", "Something went wrong deleting employee");
+
+            return PartialView("_DeleteEmployeePartial", stabilityFromDb);
         }
     }
 }

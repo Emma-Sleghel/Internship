@@ -12,9 +12,9 @@ namespace UserOperation.Services.Services
     public interface IEmployeeService
     {
         ICollection<EmployeeDto> GetAllEmployees();
-        EmployeeDto GetEmployeeById(int id);
+        EmployeeDto GetEmployeeById(string id);
         void CreateEmployee(EmployeeDto employee);
-        void DeleteEmployee(int id);
+        void DeleteEmployee(string id);
         void UpdateEmployee(EmployeeDto employee);
     }
 }

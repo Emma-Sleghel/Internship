@@ -31,7 +31,7 @@ namespace UserOperation.Services.Services
             var employees = _mapper.Map<List<EmployeeDto>>(_employeeRepository.GetAll());
             return employees;
         }
-        public EmployeeDto GetEmployeeById(int id)
+        public EmployeeDto GetEmployeeById(string id)
         {
             var employee = _mapper.Map<EmployeeDto>(_employeeRepository.GetById(id));
             return employee;
@@ -50,7 +50,7 @@ namespace UserOperation.Services.Services
             _employeeRepository.Create(employeeMap);       
         }
 
-        public void DeleteEmployee(int id)
+        public void DeleteEmployee(string id)
         {
             Employee employee = _employeeRepository.GetById(id);
             _employeeRepository.Delete(employee);

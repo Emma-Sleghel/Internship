@@ -31,4 +31,26 @@
         placeholder: "Select a critically",
         allowClear: true
     });
+
+    $("#tabletwo").on("click", "#viewbtn", function () {
+        var id = $(this).closest("tr").find("td").eq(0).html();
+        $.ajax({
+            url: "stability/delete",
+            data: { id: id },
+            success: function (data) {
+                $("#showmodal .modal-dialog").html(data);
+                $("#showmodal").modal("show");
+            }
+        });
+    });
+    $("#showmodal").on('click', '[data-save="modal"]', function () {
+        var form = $(this).parents('.modal').find('form');
+        var actionUrl = form.attr('action');
+        var sendData = form.serialize();
+        $.post(actionUrl, sendData).done(function (data) {
+            $("#showmodal").modal("hide");
+            location.reload();
+        })
+    })
+
 });
