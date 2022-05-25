@@ -91,7 +91,8 @@
     })
 
 
-    $('#send-data').click(function () {
+    $('#send-data').submit(function (e) {
+        e.preventDefault();
         var rows = [];
         $('#tabletwo tbody tr').each(function () {
             var id = $(this).find('td').eq(1).text().trim();
@@ -109,19 +110,19 @@
         });
 
 
-        $.post('stability/export', { rows: rows }, function (data) {
+        $.post('stability/Export', { rows: rows }, function (data) {
             console.log(data);
             //window.location = "/Stability/Download?file="+ data;
-            var blobObj = new Blob([data], { type: "application/vnd.ms-excel" });
-            var a = document.createElement('a');
-            var url = window.URL.createObjectURL(blobObj);
-            a.href = url;
-            a.download = 'myfile.xlsx';
-            blobObj.download = "myfile.xlsx";
-            document.body.append(a);
-            a.click();
-            a.remove();
-            window.URL.revokeObjectURL(url); 
+            //var blobObj = new Blob([data], { type: "application/vnd.ms-excel" });
+            //var a = document.createElement('a');
+            //var url = window.URL.createObjectURL(blobObj);
+            //a.href = url;
+            //a.download = 'myfile.xlsx';
+            //blobObj.download = "myfile.xlsx";
+            //document.body.append(a);
+            //a.click();
+            //a.remove();
+            //window.URL.revokeObjectURL(url); 
 
 
             

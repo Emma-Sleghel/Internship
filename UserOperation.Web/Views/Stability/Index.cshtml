@@ -11,13 +11,13 @@
         <a class="btn  btn-off" asp-controller="leave" asp-action="Index">Leaves</a>
         <a class="btn  btn-active" asp-controller="stability" asp-action="Index">Stability</a>
     </div>
-@*
-@using (Html.BeginForm("export", "stability", FormMethod.Post))
-{
-    <input type="submit" value="get rows and sent them to server" id="send-data" class="btn btn-primary" />
-}*@
 
-<input type="button" value="get rows and sent them to server" id="send-data" class="btn btn-primary" />
+@using (Html.BeginForm("export", "stability", FormMethod.Post, new{id="send-data"}))
+{
+    <input type="submit" value="get rows and sent them to server"  class="btn btn-primary" />
+}
+
+@*<input type="button" value="get rows and sent them to server" id="send-data" class="btn btn-primary" />*@
 
     <table class="table generic-table table-sm" id="tabletwo">
     <a class="btn btn-email btn-sm" asp-controller="stability" asp-action="Create"> 
@@ -95,24 +95,3 @@
     </div>
 </div>
 
-@*
-<script type="text/javascript" lang="en">
-    $(document).ready(function () {
-        $('#send-data').click(function () {
-            var rows = [];
-            $('#tabletwo tbody tr').each(function () {
-                var id = $(this).find('td').eq(1).text().trim();
-                var name = $(this).find('td').eq(2).text().trim();
-                var projects = $(this).find('td').eq(3).text().trim();
-                var row = id + "-" + name + "-" + projects;
-                rows.push(row);
-            });
-
-
-            $.post('@Url.Action("Proccess","Stability")', { rows: rows }, function (data) {
-                console.log(data);
-            });
-
-        });
-    });
-</script>*@

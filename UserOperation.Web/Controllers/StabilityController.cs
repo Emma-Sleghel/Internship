@@ -3,6 +3,8 @@ using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
+using System.Net;
+using Microsoft.AspNetCore.Http.Extensions;
 using UserOperation.Services.Dtos;
 using UserOperation.Services.Helpers;
 using UserOperation.Services.Services;
@@ -75,7 +77,7 @@ namespace UserOperation.Web.Controllers
         //    }
         //    return  Json(true);
         //}
-
+       
         [HttpPost]
         public IActionResult Export(List<string> rows)
         {
@@ -107,48 +109,41 @@ namespace UserOperation.Web.Controllers
                 new DataColumn("Level of stability"),
                 new DataColumn("Critically")
             });
-            if (rows.Count > 0)
+           
+            foreach(var row in rows)
             {
-                string[] s = rows[0].Split("-");
+                string[] s = row.Split("-");
                 dt.Rows.Add(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], s[8]);
             }
-            //dt.Rows.Add("s", "s", "s", "s", "s", "s", "s", "s", "s");
-            //foreach (var row in rows)
-            //{
-            //    dt.Rows.Add("s", "s", "s", "s", "s", "s", "s", "s", "s");
-            //    //dt.Rows.Add(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
-            //}
+          
 
+            //using (XLWorkbook wb = new XLWorkbook())
+            //{
+            //    wb.Worksheets.Add(dt);
+            //    string path = @"c:\temp\MyTest.xlsx";
+            //    wb.SaveAs(path);
+            //    return new JsonResult("MyTest.xlsx");
+
+            //}
+            Download(dt);
+            return new JsonResult("MyTest.xlsx");
+
+        }
+        public void Download(DataTable dt)
+        {
+            WebClient myWebClient = new();
+            
             using (XLWorkbook wb = new XLWorkbook())
             {
                 wb.Worksheets.Add(dt);
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    wb.SaveAs(stream);
-                    //stream.Position = 0;
-                    //TempData["file"] = stream.ToArray();
-                    
-                    //return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "myfile.xlsx");
-                    return File(stream.ToArray(), "application/vnd.ms-excel", "myfile.xlsx");
-                    
-                }
+                string fileName = "stabilityEmployee" + DateTime.Now.ToFileTime() + ".xlsx" ;
+                wb.SaveAs(fileName);
+               // string Url = HttpContext.Request.GetEncodedUrl();
+                
+               // myWebClient.DownloadFile(Url, fileName);
             }
-            //return new JsonResult("TestReportOutput.xlsx");
         }
-        //[HttpGet]
-        //public virtual ActionResult Download(string fileName)
-        //{
-        //    if (TempData["file"] != null)
-        //    {
-        //        byte[] data = TempData["file"] as byte[];
-        //        return File(data, "application/vnd.ms-excel", fileName);
-        //    }
-        //    else
-        //    {
-        //        // Problem - Log the error, generate a blank file,//           redirect to another controller action - whatever fits with your application
-        //         return new EmptyResult();
-        //    }
-        //}
+      
 
 
 
