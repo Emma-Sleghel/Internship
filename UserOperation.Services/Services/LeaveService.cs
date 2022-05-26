@@ -32,7 +32,7 @@ namespace UserOperation.Services.Services
 
         public LeaveDto GetLeaveById(int id)
         {
-            // var leave = _mapper.Map<LeaveDto>(_leaveRepository.GetById(id));
+            
             var leave = _mapper.Map<LeaveDto>(_leaveRepository.Query().Where(x => x.LeaveID == id)
                 .Include(x => x.Employee).ThenInclude(x => x.Level)
                 .Include(x => x.Employee).ThenInclude(x => x.Position)
