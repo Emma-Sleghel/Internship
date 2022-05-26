@@ -153,6 +153,7 @@ table.dataTable.table-sm thead .sorting_asc::after {
     }
 
     .generic-table tr th {
+        font-size:14px;
         font-weight: 600;
         padding-top: 5px;
         padding-bottom: 5px;
@@ -160,6 +161,7 @@ table.dataTable.table-sm thead .sorting_asc::after {
     }
 
     .generic-table tr td {
+        font-size:13px;
         font-weight: 400;
         background-color:white;
     }
