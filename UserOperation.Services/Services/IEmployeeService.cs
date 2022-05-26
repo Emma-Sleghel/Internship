@@ -16,5 +16,10 @@ namespace UserOperation.Services.Services
         void CreateEmployee(EmployeeDto employee);
         void DeleteEmployee(string id);
         void UpdateEmployee(EmployeeDto employee);
+        int[] GetProjectsIdsFromString(string projects);
+        int GetLevelId(string LevelName);
+        int GetPositionId(string LevelName);
+        ProjectDto GetProjectById(int id);
+        List<ProjectDto> GetProjectsByIds(int[] ids);
     }
 }

@@ -63,7 +63,7 @@ namespace UserOperation.Services.Services
         public int? CreateStability(StabilityDto stability)
         {   
             var stabilityEntity = _stabilityRepository.Query()
-                .Include(x => x.Employee)
+                .Include(x => x.Employee).ThenInclude(x => x.Projects)
                 .Where(l => l.Employee.EmployeeID == stability.Employee.EmployeeId)
                 .FirstOrDefault();
 
@@ -81,8 +81,15 @@ namespace UserOperation.Services.Services
 
             var criticality = _criticalityRepository.GetById(stability.Criticality.CriticalityID) ;
             var stabilityLevel = _stabilityLevelRepository.GetById(stability.StabilityLevel.StabilityLevelID);
-            var stabilityMap = _mapper.Map<Stability>(stability);
             
+           
+            var stabilityMap = _mapper.Map<Stability>(stability);
+            var employeeProjects = employee.Projects;
+
+            foreach (var project in employeeProjects)
+            {
+                stabilityMap.Employee.Projects.Add(project);
+            }
             stabilityMap.Employee = employee;
             stabilityMap.Criticality = criticality;
             stabilityMap.StabilityLevel = stabilityLevel;
@@ -127,6 +134,15 @@ namespace UserOperation.Services.Services
             _stabilityRepository.Delete(stability);
             
             return true;
+        }
+
+        public int? GetCriticalityId(string criticalityName)
+        {
+            return _criticalityRepository.Query(x => x.CriticalityName == criticalityName)?.FirstOrDefault()?.CriticalityID;
+        }
+        public int? GetStabilityLevelId(string LevelName)
+        {
+            return _stabilityLevelRepository.Query(x => x.StabilityLevelName == LevelName)?.FirstOrDefault()?.StabilityLevelID;
         }
     }
 

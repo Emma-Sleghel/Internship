@@ -1,9 +1,12 @@
 ﻿
    <section class="files-btns flex-spaceBetween" >
         <div class="upload-btns">
-            <button class="btn btn-primary btn-sm files-manager-btns" asp-controller="" asp-action="">
+            <form method="post" asp-controller="File" asp-action="Import" enctype="multipart/form-data">
+                <input type="file" name="file"/>
+            <button type="submit" class="btn btn-primary btn-sm files-manager-btns" asp-controller="File" asp-action="Import">
                 Upload &nbsp; <i class="bi bi-upload"></i>
             </button>
+            </form>
             <span>Upload your excel/csv file</span>
         </div>
         <div class="export-btns">

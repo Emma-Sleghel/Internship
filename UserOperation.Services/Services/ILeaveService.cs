@@ -14,5 +14,6 @@ namespace UserOperation.Services.Services
         int? CreateLeave(LeaveDto leave);
         LeaveDto UpdateLeave(LeaveDto leave);
         bool DeleteLeave(int id);
+        int GetReasonId(string LevelName);
     }
 }

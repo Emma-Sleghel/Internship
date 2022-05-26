@@ -111,5 +111,9 @@ namespace UserOperation.Services.Services
 
             return true;
         }
+        public int GetReasonId(string LevelName)
+        {
+            return _reasonRepository.Query(x => x.ReasonName == LevelName).FirstOrDefault().ReasonId;
+        }
     }
 }

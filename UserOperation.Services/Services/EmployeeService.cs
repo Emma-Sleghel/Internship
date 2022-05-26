@@ -71,5 +71,34 @@ namespace UserOperation.Services.Services
             _employeeRepository.Update(dbEmployee);
             
         }
+        public int[] GetProjectsIdsFromString(string projects)
+        {
+            var projectsNames = projects.Split(',');
+            return _projectRepository.Query(x => projectsNames.Contains(x.ProjectName)).Select(x=>x.ProjectId).ToArray();
+        }
+        public int GetPositionId(string positionName)
+        {
+            return _positionRepository.Query(x=>x.PositionName==positionName).FirstOrDefault().PositionId;
+        }
+        public int GetLevelId(string LevelName)
+        {
+            return _levelRepository.Query(x => x.LevelName == LevelName).FirstOrDefault().LevelId;
+        }
+        public ProjectDto GetProjectById(int id)
+        {
+            var projects = _mapper.Map<ProjectDto>(_projectRepository.GetById(id));
+            return projects;
+        }
+        public List<ProjectDto> GetProjectsByIds(int[] ids)
+        {
+            List<ProjectDto> projects = new List<ProjectDto>();
+            foreach(var id in ids)
+            {
+                projects.Add(GetProjectById(id));
+
+            }
+            return projects;
+        }
+        
     }
 }
