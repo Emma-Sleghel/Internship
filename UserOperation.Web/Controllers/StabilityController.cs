@@ -9,6 +9,8 @@ using UserOperation.Services.Dtos;
 using UserOperation.Services.Helpers;
 using UserOperation.Services.Services;
 using UserOperation.Web.Models;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 
 namespace UserOperation.Web.Controllers
 {
@@ -115,7 +117,7 @@ namespace UserOperation.Web.Controllers
                 string[] s = row.Split("-");
                 dt.Rows.Add(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], s[8]);
             }
-          
+
 
             //using (XLWorkbook wb = new XLWorkbook())
             //{
@@ -125,28 +127,60 @@ namespace UserOperation.Web.Controllers
             //    return new JsonResult("MyTest.xlsx");
 
             //}
-            Download(dt);
+            //Download(dt);
+            
+            TempData["File"] = ConvertDataSetToByteArray(dt);
+            Download();
+
+
             return new JsonResult("MyTest.xlsx");
 
         }
-        public void Download(DataTable dt)
+        public FileResult Download()
         {
-            WebClient myWebClient = new();
-            
-            using (XLWorkbook wb = new XLWorkbook())
-            {
-                wb.Worksheets.Add(dt);
-                string fileName = "stabilityEmployee" + DateTime.Now.ToFileTime() + ".xlsx" ;
-                wb.SaveAs(fileName);
-               // string Url = HttpContext.Request.GetEncodedUrl();
-                
-               // myWebClient.DownloadFile(Url, fileName);
-            }
+            //WebClient myWebClient = new();
+
+            //using (XLWorkbook wb = new XLWorkbook())
+            //{
+            //    wb.Worksheets.Add(dt);
+            //    string fileName = "stabilityEmployee" + DateTime.Now.ToFileTime() + ".xlsx" ;
+            //    wb.SaveAs(fileName);
+
+            //   // string Url = HttpContext.Request.GetEncodedUrl();
+
+            //   // myWebClient.DownloadFile(Url, fileName);
+            //}
+            return File((string)TempData["File"], "application/vnd.ms-excel" );
         }
-      
+        //private byte[] ConvertDataSetToByteArray(DataTable dataTable)
+        //{
+        //    byte[] binaryDataResult = null;
+        //    using (MemoryStream memStream = new MemoryStream())
+        //    {
+        //        BinaryFormatter brFormatter = new BinaryFormatter();
+                
+        //        brFormatter.Serialize(memStream, dataTable);
+        //        binaryDataResult = memStream.ToArray();
+        //    }
+        //    return binaryDataResult;
+        //}
+         private string ConvertDataSetToByteArray(DataTable dt)
+        {
+            string rw = "";
+            StringBuilder builder = new StringBuilder();
 
-
-
+            foreach (DataRow dr in dt.Rows)
+            {
+                foreach (DataColumn dc in dr.Table.Columns)
+                {
+                    rw = dc.ToString();
+                    if (rw.Contains(",")) rw = "\"" + rw + "\"";
+                    builder.Append(rw + ",");
+                }
+                builder.Append(Environment.NewLine);
+            }
+            return builder.ToString();
+        }
 
         public IActionResult Create()
         {

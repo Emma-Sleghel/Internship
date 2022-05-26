@@ -1,19 +1,19 @@
 ﻿$(document).ready(function () {
-    $("table").DataTable();
-    //$('table').DataTable({
-    //    dom: 'Bfrtip',
-    //    buttons: [
-    //        {
-    //            extend: 'csv',
-    //            text: 'Export',
-    //            exportOptions: {
-    //                modifier: {
-    //                   /* search: 'none'*/
-    //                }
-    //            }
-    //        }
-    //    ]
-    //});
+    
+    $('table').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'csv',
+                text: 'Export',
+                exportOptions: {
+                    modifier: {
+                       
+                    }
+                }
+            }
+        ]
+    });
 
     $('.multiple-select').select2({
         placeholder: "Select projects"
