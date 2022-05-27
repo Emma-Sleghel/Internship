@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*<partial name="_FilesActionsSection"/>*@
+
 
 
 <section>
@@ -14,11 +14,8 @@
         Add employee
     </a>
 
-
-    <button id="upload-file-btn" class="btn btn-primary btn-sm files-manager-btns" asp-controller="" asp-action="">
-        Upload &nbsp; <i class="bi bi-upload"></i>
-    </button>
-    <span class="excel-upload-span">Upload your excel/csv file</span>
+<partial name="_FilesActionsSection"/>
+    
 
 </section>
 <div class="form-btns">

@@ -17,12 +17,12 @@ namespace UserOperation.Web.Controllers
         private readonly IBaseHelper _baseHelper;
 
         private readonly List<ProjectViewModel> _projects;
-        private readonly List<LevelViewModel> _levels;    
+        private readonly List<LevelViewModel> _levels;
         private readonly List<ReasonViewModel> _reasons;
         private readonly List<PositionViewModel> _positions;
 
 
-        public LeaveController(ILeaveService leaveService,IMapper mapper, ILogger<LeaveController> logger, IBaseHelper baseHelper)
+        public LeaveController(ILeaveService leaveService, IMapper mapper, ILogger<LeaveController> logger, IBaseHelper baseHelper)
         {
             _leaveService = leaveService;
             _mapper = mapper;
@@ -75,41 +75,41 @@ namespace UserOperation.Web.Controllers
 
         public IActionResult Edit(int id)
         {
-            if( id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
-            var leaveFromDb = _leaveService.GetLeaveById(id);
-            if(leaveFromDb == null)
+            var leaveFromDb = _mapper.Map<LeaveViewModel>(_leaveService.GetLeaveById(id));
+            if (leaveFromDb == null)
             {
                 return NotFound();
             }
+
+            ViewBagAsign(_projects, _levels, _reasons, _positions);
             return View(leaveFromDb);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(LeaveViewModel model)
-        {         
+        {
             var obj = _mapper.Map<LeaveDto>(model);
+
             if (ModelState.IsValid)
             {
-                var response = _leaveService.UpdateLeave(obj);
-                if(response == null)
-                {
-                    return View(obj);
-                }
-                else
-                {
-                    return RedirectToAction("Index");
-                }
+
+                _leaveService.UpdateLeave(obj);
+
+                return RedirectToAction("Index");
+
             }
-            return View(obj);
+            ViewBagAsign(_projects, _levels, _reasons, _positions);
+            return View(model);
         }
 
         public IActionResult Delete(int id)
         {
-            if ( id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -118,7 +118,7 @@ namespace UserOperation.Web.Controllers
             {
                 return NotFound();
             }
-            return PartialView("_DeleteLeavePartial",leaveFromDb);
+            return PartialView("_DeleteLeavePartial", leaveFromDb);
         }
 
         [HttpPost]

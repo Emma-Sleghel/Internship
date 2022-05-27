@@ -1,18 +1,26 @@
-﻿
-   <section class="files-btns flex-spaceBetween" >
-        <div class="upload-btns">
-            
-            <button class="btn btn-primary btn-sm files-manager-btns" asp-controller="" asp-action="">
-                Upload &nbsp; <i class="bi bi-upload"></i>
-            </button>
-            <span>Upload your excel/csv file</span>
+﻿<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-modal-upload">
+    Upload &nbsp; <i class="bi bi-upload"></i>
+</button>
+<div class="modal fade" id="show-modal-upload" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" asp-controller="File" asp-action="Import" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="upload-btns">
+                        <input id="fileSelect" type="file" name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm files-manager-btns" asp-controller="File" asp-action="Import">
+                        Upload &nbsp; <i class="bi bi-upload"></i>
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="export-btns">
-            <button class="btn  btn-sm btn-email" asp-controller="" asp-action="">
-                Send email &nbsp; <i class="bi bi-send"></i>
-            </button>
-            <button class="btn btn-primary btn-sm files-manager-btns" asp-controller="" asp-action="">
-                Export &nbsp; <i class="bi bi-download"></i>
-            </button>
-        </div>
-    </section>
+    </div>
+</div>

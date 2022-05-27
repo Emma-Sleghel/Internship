@@ -63,7 +63,7 @@ namespace UserOperation.Services.Services
         public int? CreateStability(StabilityDto stability)
         {   
             var stabilityEntity = _stabilityRepository.Query()
-                .Include(x => x.Employee)
+                .Include(x => x.Employee).ThenInclude(x => x.Projects)
                 .Where(l => l.Employee.EmployeeID == stability.Employee.EmployeeId)
                 .FirstOrDefault();
 
@@ -72,17 +72,22 @@ namespace UserOperation.Services.Services
                 return null;
             }
 
-            var employee = _employeeRepository.GetById(stability.Employee.EmployeeId);
+            var employee = _employeeRepository.Query().Include(x => x.Projects).FirstOrDefault(x=>x.EmployeeID==stability.Employee.EmployeeId);
             if(employee == null)
             {
                 _employeeService.CreateEmployee(stability.Employee);
-                employee = _employeeRepository.GetById(stability.Employee.EmployeeId);
+                employee = _employeeRepository.Query().Include(x => x.Projects).FirstOrDefault(x => x.EmployeeID == stability.Employee.EmployeeId);
+            }
+            else
+            {
+                _employeeService.UpdateEmployee(stability.Employee);
             }
 
             var criticality = _criticalityRepository.GetById(stability.Criticality.CriticalityID) ;
             var stabilityLevel = _stabilityLevelRepository.GetById(stability.StabilityLevel.StabilityLevelID);
-            var stabilityMap = _mapper.Map<Stability>(stability);
             
+           
+            var stabilityMap = _mapper.Map<Stability>(stability);
             stabilityMap.Employee = employee;
             stabilityMap.Criticality = criticality;
             stabilityMap.StabilityLevel = stabilityLevel;
@@ -123,10 +128,17 @@ namespace UserOperation.Services.Services
             {
                 return false;
             }
-
             _stabilityRepository.Delete(stability);
-            
             return true;
+        }
+
+        public int? GetCriticalityId(string criticalityName)
+        {
+            return _criticalityRepository.Query(x => x.CriticalityName == criticalityName)?.FirstOrDefault()?.CriticalityID;
+        }
+        public int? GetStabilityLevelId(string LevelName)
+        {
+            return _stabilityLevelRepository.Query(x => x.StabilityLevelName == LevelName)?.FirstOrDefault()?.StabilityLevelID;
         }
     }
 

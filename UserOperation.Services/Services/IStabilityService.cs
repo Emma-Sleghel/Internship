@@ -10,5 +10,7 @@ namespace UserOperation.Services.Services
         void UpdateStability(StabilityDto stability);
         bool DeleteStability(int id);
         ICollection<ProjectDto> GetAllProjects();
+        int? GetStabilityLevelId(string LevelName);
+        int? GetCriticalityId(string criticalityName);
     }
 }
