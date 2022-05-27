@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserOperation.Data.Entities;
 using UserOperation.Data.Repository;
 using UserOperation.Services.Dtos;
@@ -42,8 +37,6 @@ namespace UserOperation.Services.Services
             var level = _levelRepository.GetById(employee.Level.LevelId);
             var position = _positionRepository.GetById(employee.Position.PositionId);
             var projects = _projectRepository.Query(x => employee.ProjectsIds.Contains(x.ProjectId)).ToList();
-            
-
             var employeeMap = _mapper.Map<Employee>(employee);
             employeeMap.Level = level;
             employeeMap.Position = position;

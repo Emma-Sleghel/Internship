@@ -72,11 +72,15 @@ namespace UserOperation.Services.Services
                 return null;
             }
 
-            var employee = _employeeRepository.GetById(stability.Employee.EmployeeId);
+            var employee = _employeeRepository.Query().Include(x => x.Projects).FirstOrDefault(x=>x.EmployeeID==stability.Employee.EmployeeId);
             if(employee == null)
             {
                 _employeeService.CreateEmployee(stability.Employee);
-                employee = _employeeRepository.GetById(stability.Employee.EmployeeId);
+                employee = _employeeRepository.Query().Include(x => x.Projects).FirstOrDefault(x => x.EmployeeID == stability.Employee.EmployeeId);
+            }
+            else
+            {
+                _employeeService.UpdateEmployee(stability.Employee);
             }
 
             var criticality = _criticalityRepository.GetById(stability.Criticality.CriticalityID) ;
@@ -84,12 +88,6 @@ namespace UserOperation.Services.Services
             
            
             var stabilityMap = _mapper.Map<Stability>(stability);
-            var employeeProjects = employee.Projects;
-
-            foreach (var project in employeeProjects)
-            {
-                stabilityMap.Employee.Projects.Add(project);
-            }
             stabilityMap.Employee = employee;
             stabilityMap.Criticality = criticality;
             stabilityMap.StabilityLevel = stabilityLevel;
@@ -130,9 +128,7 @@ namespace UserOperation.Services.Services
             {
                 return false;
             }
-
             _stabilityRepository.Delete(stability);
-            
             return true;
         }
 
