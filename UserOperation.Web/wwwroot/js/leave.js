@@ -1,16 +1,5 @@
 ﻿
 function initialiseLeaveCharts() {
-    leavePrimaryReasonChart();
-    leaveSecondaryReasonChart();
-    leavePositionNameChart();
-}
-
-$(document).ready(initialiseLeaveCharts);
-
-
-//PRIMARY LEAVING REASON chart
-function leavePrimaryReasonChart() {
-
     //Create DataTable
     var table = $('#table-leave').DataTable({
         dom: 'PBfrtip',
@@ -28,6 +17,16 @@ function leavePrimaryReasonChart() {
             }
         ]
     });
+    leavePrimaryReasonChart(table);
+    leaveSecondaryReasonChart(table);
+    leavePositionNameChart(table);
+}
+
+$(document).ready(initialiseLeaveCharts);
+
+
+//PRIMARY LEAVING REASON chart
+function leavePrimaryReasonChart(table) {
 
     table.searchPanes.container().hide();
 
@@ -88,25 +87,7 @@ function chartDataPrimaryReason(table) {
 
 
 //SECONDARY LEAVING REASON chart
-function leaveSecondaryReasonChart() {
-
-    //Create DataTable
-    var table = $('#table-leave').DataTable({
-        dom: 'PBfrtip',
-        retrieve: true,
-        paging: true,
-        buttons: [
-            {
-                extend: 'csv',
-                text: 'Export',
-                exportOptions: {
-                    modifier: {
-
-                    }
-                }
-            }
-        ]
-    });
+function leaveSecondaryReasonChart(table) {
 
     table.searchPanes.container().hide();
 
@@ -167,25 +148,7 @@ function chartDataSecondaryReason(table) {
 
 
 //POSITION NAME LEAVE chart
-function leavePositionNameChart() {
-
-    //Create DataTable
-    var table = $('#table-leave').DataTable({
-        dom: 'PBfrtip',
-        retrieve: true,
-        paging: true,
-        buttons: [
-            {
-                extend: 'csv',
-                text: 'Export',
-                exportOptions: {
-                    modifier: {
-
-                    }
-                }
-            }
-        ]
-    });
+function leavePositionNameChart(table) {
 
     table.searchPanes.container().hide();
 
