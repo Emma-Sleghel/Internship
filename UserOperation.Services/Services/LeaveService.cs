@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserOperation.Data.Entities;
 using UserOperation.Services.Dtos;
 using UserOperation.Data.Repository;
-using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
 namespace UserOperation.Services.Services
@@ -60,12 +54,17 @@ namespace UserOperation.Services.Services
 
             if (leaveEntity != null)
                 return null;
+            
 
-            var employee = _employeeRepository.GetById(leave.Employee.EmployeeId);
+            var employee = _employeeRepository.Query().Include(x => x.Projects).FirstOrDefault(x => x.EmployeeID == leave.Employee.EmployeeId);
             if (employee == null)
             {
                 _employeeService.CreateEmployee(leave.Employee);
-                employee = _employeeRepository.GetById(leave.Employee.EmployeeId);
+                employee = _employeeRepository.Query().Include(x => x.Projects).FirstOrDefault(x => x.EmployeeID ==leave.Employee.EmployeeId);
+            }
+            else
+            {
+                _employeeService.UpdateEmployee(leave.Employee);
             }
             var primaryReason = _reasonRepository.GetById(leave.PrimaryReason.ReasonId);
             var secondaryReason = _reasonRepository.GetById(leave.SecondaryReason.ReasonId);
@@ -115,10 +114,12 @@ namespace UserOperation.Services.Services
             {
                 return false;
             }
-
             _leaveRepository.Delete(leave);
-
             return true;
+        }
+        public int GetReasonId(string LevelName)
+        {
+            return _reasonRepository.Query(x => x.ReasonName == LevelName).FirstOrDefault().ReasonId;
         }
     }
 }

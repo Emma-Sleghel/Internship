@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserOperation.Data.Entities;
 using UserOperation.Data.Repository;
 using UserOperation.Services.Dtos;
@@ -42,8 +37,6 @@ namespace UserOperation.Services.Services
             var level = _levelRepository.GetById(employee.Level.LevelId);
             var position = _positionRepository.GetById(employee.Position.PositionId);
             var projects = _projectRepository.Query(x => employee.ProjectsIds.Contains(x.ProjectId)).ToList();
-            
-
             var employeeMap = _mapper.Map<Employee>(employee);
             employeeMap.Level = level;
             employeeMap.Position = position;
@@ -71,5 +64,34 @@ namespace UserOperation.Services.Services
             _employeeRepository.Update(dbEmployee);
             
         }
+        public int[] GetProjectsIdsFromString(string projects)
+        {
+            var projectsNames = projects.Split(',');
+            return _projectRepository.Query(x => projectsNames.Contains(x.ProjectName)).Select(x=>x.ProjectId).ToArray();
+        }
+        public int GetPositionId(string positionName)
+        {
+            return _positionRepository.Query(x=>x.PositionName==positionName).FirstOrDefault().PositionId;
+        }
+        public int GetLevelId(string LevelName)
+        {
+            return _levelRepository.Query(x => x.LevelName == LevelName).FirstOrDefault().LevelId;
+        }
+        public ProjectDto GetProjectById(int id)
+        {
+            var projects = _mapper.Map<ProjectDto>(_projectRepository.GetById(id));
+            return projects;
+        }
+        public List<ProjectDto> GetProjectsByIds(int[] ids)
+        {
+            List<ProjectDto> projects = new List<ProjectDto>();
+            foreach(var id in ids)
+            {
+                projects.Add(GetProjectById(id));
+
+            }
+            return projects;
+        }
+        
     }
 }
