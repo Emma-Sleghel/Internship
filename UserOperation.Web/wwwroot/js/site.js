@@ -1,10 +1,24 @@
 ﻿$(document).ready(function () {
-    $("table").DataTable();
+    
+    $('table').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'csv',
+                text: 'Export',
+                exportOptions: {
+                    modifier: {
+                       
+                    }
+                }
+            }
+        ]
+    });
 
     $('.multiple-select').select2({
         placeholder: "Select projects"
     });
-   
+
     $("#datepicker").datepicker({
         format: "yyyy",
         startView: "years",
@@ -23,7 +37,7 @@
         placeholder: "Select a stability month",
         allowClear: true
     });
-    
+
     $(".place-stalevel").select2({
         placeholder: "Select a level of stability",
         allowClear: true

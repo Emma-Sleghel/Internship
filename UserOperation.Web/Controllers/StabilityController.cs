@@ -1,10 +1,16 @@
 ﻿using AutoMapper;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
+using System.Net;
+using Microsoft.AspNetCore.Http.Extensions;
 using UserOperation.Services.Dtos;
 using UserOperation.Services.Helpers;
 using UserOperation.Services.Services;
 using UserOperation.Web.Models;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 
 namespace UserOperation.Web.Controllers
 {
@@ -24,7 +30,7 @@ namespace UserOperation.Web.Controllers
         {
             _stabilityService = stabilityService;
             _mapper = mapper;
-            _logger = logger; 
+            _logger = logger;
             _baseHelper = baseHelper;
             _projects = _mapper.Map<List<ProjectViewModel>>(_baseHelper.GetProjects());
             _levels = _mapper.Map<List<LevelViewModel>>(_baseHelper.GetLevels());
@@ -34,7 +40,7 @@ namespace UserOperation.Web.Controllers
         }
         public void ViewBagAsign(List<ProjectViewModel> _projects, List<LevelViewModel> _levels, List<StabilityLevelViewModel> _stabilityLevels
             , List<CriticalityViewModel> _criticalities, List<PositionViewModel> _positions)
-        {        
+        {
             ViewBag.Projects = new MultiSelectList(_projects, "ProjectId", "ProjectName");
             ViewBag.Levels = new SelectList(_levels, "LevelId", "LevelName");
             ViewBag.StabilityLevels = new SelectList(_stabilityLevels, "StabilityLevelID", "StabilityLevelName");
@@ -50,7 +56,7 @@ namespace UserOperation.Web.Controllers
 
         public IActionResult Create()
         {
-            ViewBagAsign(_projects,_levels,_stabilityLevels,_criticalities, _positions);
+            ViewBagAsign(_projects, _levels, _stabilityLevels, _criticalities, _positions);
             return View();
         }
         [HttpPost]
@@ -59,9 +65,9 @@ namespace UserOperation.Web.Controllers
         {
             var obj = _mapper.Map<StabilityDto>(model);
             ViewBagAsign(_projects, _levels, _stabilityLevels, _criticalities, _positions);
-            
+
             if (ModelState.IsValid)
-            {              
+            {
                 _stabilityService.CreateStability(obj);
                 TempData["success"] = "Employee created successfully";
                 return RedirectToAction("Index");
@@ -85,7 +91,7 @@ namespace UserOperation.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(StabilityViewModel model)
-        { 
+        {
 
             var obj = _mapper.Map<StabilityDto>(model);
             if (ModelState.IsValid)
@@ -105,12 +111,12 @@ namespace UserOperation.Web.Controllers
                 return NotFound();
             }
             var stabilityFromDb = _stabilityService.GetStabilityById(id);
-     
+
             if (stabilityFromDb == null)
             {
                 return NotFound();
             }
-            return PartialView("_DeleteEmployeePartial", stabilityFromDb); 
+            return PartialView("_DeleteEmployeePartial", stabilityFromDb);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

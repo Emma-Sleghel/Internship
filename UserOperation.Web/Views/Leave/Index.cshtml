@@ -4,18 +4,24 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<partial name="_FilesActionsSection"/>
- <div class="form-btns">
-        <a class="btn  btn-active" asp-controller="leave" asp-action="Index">Leaves</a>
-        <a class="btn  btn-off" asp-controller="stability" asp-action="Index">Stability</a>
- </div>
-<table class="table generic-table table-sm" id="table-one">
-    <a class="btn btn-email btn-sm" asp-controller="leave" asp-action="Create"> 
+
+<section>
+    <a class="btn btn-email btn-sm" asp-controller="leave" asp-action="Create">
         <i class="bi bi-person-plus"></i>
-        Add employee</a>
-    <thead>   
+        Add employee
+    </a>
+<partial name="_FilesActionsSection"/>
+</section>
+
+<div class="form-btns">
+    <a class="btn  btn-active" asp-controller="leave" asp-action="Index">Leaves</a>
+    <a class="btn  btn-off" asp-controller="stability" asp-action="Index">Stability</a>
+</div>
+<table class="table generic-table table-sm" id="table-one">
+
+    <thead>
         <tr>
-            <th class="d-none"></th>
+            <th class="d-none">Leave Employee ID</th>
             <th>Personnel NO.</th>
             <th>Employee name</th>
             <th>Projects</th>
@@ -31,7 +37,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var obj in Model)
+        @foreach (var obj in Model)
         {
             <tr>
                 <td class="d-none">@obj.LeaveID</td>
@@ -40,22 +46,22 @@
                 </td>
                 <td>
                     @obj.Employee.EmployeeName
-                </td> 
+                </td>
                 <td>
                     @string.Join(",",obj.Employee.Projects.Select(x=>x.ProjectName).ToList())
                 </td>
                 <td>
                     @obj.Employee.Position.PositionName
-                </td> 
+                </td>
                 <td>
                     @obj.Employee.Level.LevelName
-                </td> 
+                </td>
                 <td>
                     @obj.LeaveMonth
-                </td> 
+                </td>
                 <td>
                     @obj.LeaveYear
-                </td> 
+                </td>
                 <td>
                     @obj.ActiveHC
                 </td>
@@ -70,7 +76,7 @@
                         <i class="bi bi-pencil-square "></i>
                     </a>
                 </td>
-                 <td>
+                <td>
                     <button id="viewbtn" class="btn" style="padding:0"><i class="bi bi-trash"></i></button>
                 </td>
             </tr>
@@ -79,11 +85,6 @@
 </table>
 
 <div id="showmodal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">   
+    <div class="modal-dialog" role="document">
     </div>
-    </div>
-
-
-
-
-
+</div>

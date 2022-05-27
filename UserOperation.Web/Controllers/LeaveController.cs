@@ -64,7 +64,6 @@ namespace UserOperation.Web.Controllers
             var obj = _mapper.Map<LeaveDto>(model);
             ViewBagAsign(_projects, _levels, _reasons, _positions);
 
-
             if (ModelState.IsValid)
             {
                 _leaveService.CreateLeave(obj);

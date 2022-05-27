@@ -5,19 +5,27 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<partial name="_FilesActionsSection"/>
 
- <div class="form-btns">
-        <a class="btn  btn-off" asp-controller="leave" asp-action="Index">Leaves</a>
-        <a class="btn  btn-active" asp-controller="stability" asp-action="Index">Stability</a>
-    </div>
-<table class="table generic-table table-sm" id="tabletwo">
-    <a class="btn btn-email btn-sm" asp-controller="stability" asp-action="Create"> 
+
+
+<section>
+    <a class="btn btn-email btn-sm" asp-controller="stability" asp-action="Create">
         <i class="bi bi-person-plus"></i>
-        Add employee</a>
+        Add employee
+    </a>
+
+<partial name="_FilesActionsSection"/>
+    
+
+</section>
+<div class="form-btns">
+    <a class="btn  btn-off" asp-controller="leave" asp-action="Index">Leaves</a>
+    <a class="btn  btn-active" asp-controller="stability" asp-action="Index">Stability</a>
+</div>
+<table class="table generic-table table-sm" id="tabletwo">
     <thead>
         <tr>
-            <th class="d-none"></th>
+            <th class="d-none">Stability Employee ID</th>
             <th>Personnel NO.</th>
             <th>Employee name</th>
             <th>Projects</th>
@@ -32,29 +40,29 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var obj in Model)
+        @foreach (var obj in Model)
         {
             <tr>
                 <td class="d-none">@obj.StabilityId</td>
                 <td>@obj.Employee.EmployeeId</td>
                 <td>
                     @obj.Employee.EmployeeName
-                </td> 
+                </td>
                 <td>
                     @string.Join(",",obj.Employee.Projects.Select(x=>x.ProjectName).ToList())
                 </td>
                 <td>
                     @obj.Employee.Position.PositionName
-                </td> 
+                </td>
                 <td>
                     @obj.Employee.Level.LevelName
-                </td> 
+                </td>
                 <td>
                     @obj.StabilityMonth
-                </td> 
+                </td>
                 <td>
                     @obj.LeavingYear
-                </td> 
+                </td>
                 <td>
                     @obj.StabilityLevel.StabilityLevelName
                 </td>
@@ -62,13 +70,13 @@
                     @obj.Criticality.CriticalityName
                 </td>
                 <td>
-                    
-                    <a asp-controller="Stability" asp-action="Edit" asp-route-id="@obj.StabilityId" >  
+
+                    <a asp-controller="Stability" asp-action="Edit" asp-route-id="@obj.StabilityId">
                         <i class="bi bi-pencil-square"></i>
-                    </a>  
-                    
-                  </td> 
-                 <td>
+                    </a>
+
+                </td>
+                <td>
                     <button id="viewbtn" class="btn" style="padding:0"><i class="bi bi-trash"></i></button>
                 </td>
             </tr>
@@ -76,8 +84,13 @@
     </tbody>
 </table>
 
+
+
+
+
+
 <div id="showmodal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        
     </div>
 </div>
+
