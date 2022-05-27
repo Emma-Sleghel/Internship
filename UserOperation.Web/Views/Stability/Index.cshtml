@@ -15,14 +15,29 @@
     </a>
 
 <partial name="_FilesActionsSection"/>
+</section>
+
+    <div id="st-charts">
+        <div id="st-position-chart"></div>
+        <div id="st-level-of-stability"></div>
+        <div id="st-critically"></div>
+    </div>
+       
+
+
+
+
+    
     
 
-</section>
+    
+
+
 <div class="form-btns">
     <a class="btn  btn-off" asp-controller="leave" asp-action="Index">Leaves</a>
     <a class="btn  btn-active" asp-controller="stability" asp-action="Index">Stability</a>
 </div>
-<table class="table generic-table table-sm" id="tabletwo">
+<table class="table generic-table table-sm" id="table-stability">
     <thead>
         <tr>
             <th class="d-none">Stability Employee ID</th>
@@ -86,11 +101,9 @@
 
 
 
-
-
-
 <div id="showmodal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
     </div>
 </div>
 
+<script src="~/js/stability.js" asp-append-version="true"></script>

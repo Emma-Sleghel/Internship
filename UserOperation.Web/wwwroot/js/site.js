@@ -1,20 +1,27 @@
-﻿$(document).ready(function () {
-    
-    $('table').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'csv',
-                text: 'Export',
-                exportOptions: {
-                    modifier: {
-                       
-                    }
-                }
-            }
-        ]
-    });
+﻿function initialise() {
+    tables();
+}
 
+$(document).ready(initialise);
+
+
+function tables() {
+
+    //$('table').DataTable({
+    //    dom: 'Bfrtip',
+    //    buttons: [
+    //        {
+    //            extend: 'csv',
+    //            text: 'Export',
+    //            exportOptions: {
+    //                modifier: {
+
+    //                }
+    //            }
+    //        }
+    //    ]
+    //});
+ 
     $('.multiple-select').select2({
         placeholder: "Select projects"
     });
@@ -55,7 +62,7 @@
         allowClear: true
     });
 
-    $("#tabletwo").on("click", "#viewbtn", function () {
+    $("#table-stability").on("click", "#viewbtn", function () {
         var id = $(this).closest("tr").find("td").eq(0).html();
         $.ajax({
             url: "stability/delete",
@@ -67,7 +74,7 @@
         });
     });
 
-    $("#table-one").on("click", "#viewbtn", function () {
+    $("#table-leave").on("click", "#viewbtn", function () {
         var id = $(this).closest("tr").find("td").eq(0).html();
         $.ajax({
             url: "leave/delete",

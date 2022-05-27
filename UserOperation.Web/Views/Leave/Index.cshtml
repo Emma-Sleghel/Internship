@@ -13,11 +13,20 @@
 <partial name="_FilesActionsSection"/>
 </section>
 
+<div id="lv-charts">
+        <div id="lv-primary-reason-chart"></div>
+        <div id="lv-secondary-reason-chart"></div>
+        <div id="lv-position-chart"></div>
+    </div>
+
+ 
+
+
 <div class="form-btns">
     <a class="btn  btn-active" asp-controller="leave" asp-action="Index">Leaves</a>
     <a class="btn  btn-off" asp-controller="stability" asp-action="Index">Stability</a>
 </div>
-<table class="table generic-table table-sm" id="table-one">
+<table class="table generic-table table-sm" id="table-leave">
 
     <thead>
         <tr>
@@ -87,4 +96,6 @@
 <div id="showmodal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
     </div>
-</div>
+    </div>
+
+ <script src="~/js/leave.js" asp-append-version="true"></script>
