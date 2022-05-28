@@ -6,8 +6,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <section>
     <a class="btn btn-email btn-sm" asp-controller="stability" asp-action="Create">
         <i class="bi bi-person-plus"></i>
@@ -18,21 +16,11 @@
 </section>
 
     <div id="st-charts">
-        <div id="st-position-chart"></div>
-        <div id="st-level-of-stability"></div>
-        <div id="st-critically"></div>
+        <div id="st-position-chart" class="stability-chart"></div>
+        <div id="st-level-of-stability" class="stability-chart"></div>
+        <div id="st-critically" class="stability-chart"></div>
     </div>
-       
-
-
-
-
-    
-    
-
-    
-
-
+      
 <div class="form-btns">
     <a class="btn  btn-off" asp-controller="leave" asp-action="Index">Leaves</a>
     <a class="btn  btn-active" asp-controller="stability" asp-action="Index">Stability</a>

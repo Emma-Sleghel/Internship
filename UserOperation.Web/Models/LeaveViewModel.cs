@@ -14,12 +14,12 @@ namespace UserOperation.Web.Models
 
         [DisplayName("Leave year")]
         [Required(ErrorMessage = "Please select leave year")]
-        public int LeaveYear { get; set; }
+        public int? LeaveYear { get; set; }
 
 
         [DisplayName("Active HC")]
         [Required(ErrorMessage = "Please add Active HC")]
-        public int ActiveHC { get; set; }
+        public int? ActiveHC { get; set; }
 
         [DisplayName("Primary reason")]
         [Required(ErrorMessage = "Please select primary reason")]

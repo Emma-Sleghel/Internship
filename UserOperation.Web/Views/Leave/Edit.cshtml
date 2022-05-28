@@ -2,10 +2,12 @@
 @using UserOperation.Data.Entities
 @model LeaveViewModel
 
-<form asp-action="Edit" method="post">
-    <div class="border p-3 mt-4">
+<form asp-action="Edit" method="post" class="edit-form">
+    <div class=" p-3 mt-4">
         <div class="row pb-2">
-            <hr />
+            <h2  id="title-color">
+                Edit Leave</h2>
+                <hr />
         </div>
         <div class="mb-3">
             <label asp-for="Employee.EmployeeId"></label>

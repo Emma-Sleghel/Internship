@@ -1,5 +1,4 @@
-﻿
-namespace UserOperation.Services.Dtos
+﻿namespace UserOperation.Services.Dtos
 {
     public class StabilityDto
     {

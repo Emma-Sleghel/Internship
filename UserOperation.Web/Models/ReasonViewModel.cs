@@ -1,8 +1,12 @@
-﻿namespace UserOperation.Web.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace UserOperation.Web.Models
 {
     public class ReasonViewModel
     {
-        public int ReasonId { get; set; }
+        
+        [Required(ErrorMessage = "Please select a reason")]
+        public int? ReasonId { get; set; }
         public string? ReasonName { get; set; }
     }
 }

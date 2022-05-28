@@ -12,6 +12,25 @@ html {
     }
 }
 
+#registerForm > div:nth-child(3),
+#registerForm > div:nth-child(4),
+#registerForm > div:nth-child(5),
+#registerForm > div:nth-child(6),
+#registerForm > div:nth-child(7),
+#account > div:nth-child(3),
+#account > div:nth-child(4),
+#profile-form > div:nth-child(1),
+#profile-form > div:nth-child(2),
+#change-password-form > div:nth-child(1),
+#change-password-form > div:nth-child(2),
+#change-password-form > div:nth-child(3){
+    margin-bottom: 10px;
+}
+body > div > main > div > div > div.col-md-9 > div > div > p:nth-child(4){
+    margin-top:10px;
+}
+
+
 .navbar {
     background-color: #00195f;
 }
@@ -37,7 +56,9 @@ body {
 .padding {
     padding: 0 20px;
 }
-
+#title-color {
+    color: #00195f;
+}
 .flex-center {
     display: flex;
     justify-content: center;
@@ -82,7 +103,13 @@ table.dataTable.table-sm thead .sorting_asc::after {
 .btn-sm {
     height: 30px;
 }
-
+.btn-primary {
+    background-color: #00195f;
+    border: none;
+}
+.btn-secondary{
+    border:none;
+}
 .btn-email {
     background-color: #fff;
     border: 1px solid #00195f;
@@ -191,7 +218,8 @@ table tbody tr td .bi {
     width: 150px;
 }
 
-.create-form {
+.create-form,
+.edit-form{
     width: 70%;
     margin: 0 auto;
 }
@@ -212,8 +240,8 @@ span .select2-container {
     height: 34px !important;
 }
 
-#table-one,
-#tabletwo {
+#table-leave,
+#table-stability {
     width: 100% !important;
 }
 
@@ -221,7 +249,7 @@ button.btn.btn-secondary.buttons-csv.buttons-html5 {
     background-color: #00195f;
     position: absolute;
     right: 0;
-    top: -70px;
+    top: -410px;
     height: 30px;
     padding: 1px 8px;
     border: none;
@@ -237,8 +265,8 @@ button.btn.btn-secondary.buttons-csv.buttons-html5 {
         left: 10px;
     }
 
-div#table-one_filter.dataTables_filter,
-div#tabletwo_filter.dataTables_filter {
+div#table-leave_filter.dataTables_filter,
+div#table-stability_filter.dataTables_filter {
     position: absolute;
     right: 5px;
     top: -5px;
@@ -246,14 +274,14 @@ div#tabletwo_filter.dataTables_filter {
     z-index:10;
 }
 
-div#table-one_info.dataTables_info,
-div#tabletwo_info.dataTables_info {
+div#table-leave_info.dataTables_info,
+div#table-stability_info.dataTables_info {
     font-size: 14px;
     padding-top: 0.55em;
 }
 
-div#tabletwo_paginate.dataTables_paginate.paging_simple_numbers,
-div#table-one_paginate.dataTables_paginate.paging_simple_numbers {
+div#table-stability_paginate.dataTables_paginate.paging_simple_numbers,
+div#table-leave_paginate.dataTables_paginate.paging_simple_numbers {
     font-size: 12px;
     position: relative;
     top: -30px;
@@ -286,4 +314,26 @@ td:last-of-type,
 td:nth-last-of-type(2)
 {
     text-align:end;
+}
+
+#st-charts, #lv-charts {
+    margin:30px 0px;
+    display: flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+}
+
+
+svg.highcharts-root{
+    height:275px;
+    width:410px;
+}
+.highcharts-containter{
+    height:auto !important;
+    width:auto !important;
+}
+
+div.highcharts-container {
+    height: 275px !important;
+    width: 410px !important;
 }
