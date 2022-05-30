@@ -1,15 +1,4 @@
 ﻿function initialiseStabilityCharts() {
-    stabilityPositionChart();
-    levelOfStabilityChart();
-    stCriticallyChart();
-}
-
-$(document).ready(initialiseStabilityCharts);
-
-
-//STABILITY POSITION chart
-function stabilityPositionChart() {
-
     //Create DataTable
     var table = $('#table-stability').DataTable({
         dom: 'PBfrtip',
@@ -27,6 +16,16 @@ function stabilityPositionChart() {
             }
         ]
     });
+    stabilityPositionChart(table);
+    levelOfStabilityChart(table);
+    stCriticallyChart(table);
+}
+
+$(document).ready(initialiseStabilityCharts);
+
+
+//STABILITY POSITION chart
+function stabilityPositionChart(table) {
 
     table.searchPanes.container().hide();
 
@@ -85,25 +84,7 @@ function chartDataPositionStability(table) {
 
 
 //LEVEL OF STABILITY chart
-function levelOfStabilityChart() {
-
-    //Create DataTable
-    var table = $('#table-stability').DataTable({
-        dom: 'PBfrtip',
-        retrieve: true,
-        paging: true,
-        buttons: [
-            {
-                extend: 'csv',
-                text: 'Export',
-                exportOptions: {
-                    modifier: {
-
-                    }
-                }
-            }
-        ]
-    });
+function levelOfStabilityChart(table) {
 
     table.searchPanes.container().hide();
 
@@ -161,28 +142,8 @@ function chartDataLevelOfStability(table) {
 }
 
 
-
-
 //CRITICALLY chart
-function stCriticallyChart() {
-
-    //Create DataTable
-    var table = $('#table-stability').DataTable({
-        dom: 'PBfrtip',
-        retrieve: true,
-        paging: true,
-        buttons: [
-            {
-                extend: 'csv',
-                text: 'Export',
-                exportOptions: {
-                    modifier: {
-
-                    }
-                }
-            }
-        ]
-    });
+function stCriticallyChart(table) {
 
     table.searchPanes.container().hide();
 
