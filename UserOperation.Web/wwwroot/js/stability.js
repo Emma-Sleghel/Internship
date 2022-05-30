@@ -160,7 +160,7 @@ function stCriticallyChart(table) {
             enabled: false
         },
         title: {
-            text: 'Level of stability',
+            text: 'Criticalities',
         },
         series: [
             {
