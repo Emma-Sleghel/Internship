@@ -2,13 +2,12 @@
 @using UserOperation.Data.Entities
 @model StabilityViewModel
 
-<form method="post" asp-action="Edit">
-    <div class="border p-3 mt-4">
+<form method="post" asp-action="Edit" class="edit-form">
+    <div class=" p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary">
-                Edit Stability
-
-            </h2>
+            <h2  id="title-color">
+                Edit Stability </h2>
+            <hr />
         </div>
 
         <div class="mb-3">
