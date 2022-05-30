@@ -9,6 +9,7 @@ using UserOperation.Web.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection"); ;
+builder.Services.AddTransient<DataSeeder>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(connectionString)); ;
@@ -30,7 +31,19 @@ AddAuthorizationPolicies();
 #endregion
 
 var app = builder.Build();
+if (args.Length == 1 && args[0].ToLower() == "seeddata")
+    SeedData(app);
 
+void SeedData(IHost app)
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using (var scope = scopedFactory.CreateScope())
+    {
+        var service = scope.ServiceProvider.GetService<DataSeeder>();
+        service.Seed();
+    }
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
