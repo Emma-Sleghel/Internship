@@ -6,21 +6,6 @@ $(document).ready(initialise);
 
 
 function tables() {
-
-    //$('table').DataTable({
-    //    dom: 'Bfrtip',
-    //    buttons: [
-    //        {
-    //            extend: 'csv',
-    //            text: 'Export',
-    //            exportOptions: {
-    //                modifier: {
-
-    //                }
-    //            }
-    //        }
-    //    ]
-    //});
  
     $('.multiple-select').select2({
         placeholder: "Select projects"
